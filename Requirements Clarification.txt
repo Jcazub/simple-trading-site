@@ -53,9 +53,10 @@ As a user, I’d like to see the font color of stock symbols and current prices 
 Based on API info:
 
 Main uses:
-verify stock for symbol exists
-get most recent price of stock
-get most recent amounts of stock available for purchase
+get stock info
+	verify stock for symbol exists
+	get most recent price of stock
+	get most recent amounts of stock available for purchase
 purchase a stock
 sell a stock
 
