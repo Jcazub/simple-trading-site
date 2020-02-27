@@ -1,0 +1,18 @@
+Proposed Timeline:
+
+Day 1 & 2: Requirements clarification, domain API review, user stories created and organized, flowcharts created
+	1: 
+	Clarify requirements down to chunks that can be organized into actionable tasks
+	Review IEX API, figuring out key calls for our program
+	2:
+	Create and organize user stories
+	Create program flowcharts
+	Create database schema
+	
+Day 3 & 4: Implement backend portion of program
+	Focus first on domain objects and ensure/test to make sure they function as needed
+		Then data access layers, followed by service (buisness logic layers), then controll classes
+
+Day 5 & 6: Implement frontend portion of program
+
+

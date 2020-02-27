@@ -1,0 +1,40 @@
+Domain Objects:
+
+User:
+int userId
+string firstName
+string lastName
+string email
+BigDecimal currentBalance
+List<Stock>
+List<Transaction>
+
+
+Stock:
+string symbol
+BigDecimal price
+int availableUnits
+int ownedUnits
+
+
+Transaction:
+int transactionId
+String symbol (should this be the full stock object instead?)
+Date transactionDate
+BigDecimal stockPrice
+int amountTraded
+
+BigDecimal getTotalPrice();
+
+
+TradeRequest:
+int user (should this be the full user object instead?)
+int amountToBeTraded
+boolean buyOrSell (should this be enum or object to accomodate more trade types for future use?)
+int symbol
+
+
+
+
+
+

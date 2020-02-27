@@ -1,0 +1,68 @@
+Requirements clarification
+
+Based on client info:
+As a user, I want to create a new account with my name, email, and password so that I can buy and trade stocks. 
+• Default the user’s cash account balance to $5000.00 USD. 
+• A user can only register once with any given email.
+	There will be need for a user object with the possible member fields:
+		name
+		list of stocks held
+		current balance
+		Database object should hold the following info:
+			userId (int 32)
+			name (varchar 50)
+			email address (varchar 50)
+
+As a user, I want to authenticate via email and password so that I can access my account.
+	Use Spring Security to handle secure user login?
+
+As a user, I want to buy shares of stock at its current price by specifying its ticker symbol and the number of shares so that I can invest. 
+• A user can only buy whole number quantities of shares. 
+• A user can only buy shares if they have enough cash in their account for a given purchase. 
+• A user can only buy shares if the ticker symbol is valid.
+	validate symbol against domain API prior to any transaction
+
+As a user, I want to view a list of all transactions I’ve made to date (trades) so that I can perform an audit
+	There will be a transaction object which will need to track the following information:
+		user which the transaction belongs to
+		stock used in the transaction
+		amount of stock traded
+		price of stock at time of transaction
+			by extension, total price of transaction
+		whether the transaction was a buy or sell
+			Database object:
+				transactionID (int 64 pk)
+				userID (int fk)
+				stock purchased/sold 
+				price of stock on purchase/sell
+				amount of stock bought/sold
+			
+
+As a user, I want to view my portfolio (a list of all the stocks I own along with their current values) so that I can review performance. 
+• Current values should be based on the latest price and quantity owned for a given stock. 
+	update value based on current price against amount of stock owned
+• Each stock owned should only appear once.
+	aggregate transactions/shares owned of same stock
+
+As a user, I’d like to see the font color of stock symbols and current prices in my portfolio change dynamically to indicate performance. 
+• Display red when the current price is less than the day’s open price. 
+• Display grey when the current price is equal to the day’s open price. 
+• Display green when the current price is greater than the day’s open price.
+
+
+Based on API info:
+
+Main uses:
+verify stock for symbol exists
+get most recent price of stock
+get most recent amounts of stock available for purchase
+purchase a stock
+sell a stock
+
+Misc Requirements:
+
+backend functionality should be exposed via a REST API
+
+
+
+ 
