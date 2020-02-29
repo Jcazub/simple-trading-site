@@ -9,6 +9,8 @@ BigDecimal currentBalance
 List<Stock>
 List<Transaction>
 
+Void buyStock(symbol, amount)?
+
 
 Stock:
 string symbol
@@ -30,11 +32,9 @@ BigDecimal getTotalPrice();
 TradeRequest:
 int user (should this be the full user object instead?)
 int amountToBeTraded
-boolean buyOrSell (should this be enum or object to accomodate more trade types for future use?)
+TransactionType transactionType 
 int symbol
 
 
-
-
-
-
+TransactionType (enum):
+BUY, SELL

@@ -2,8 +2,6 @@ Requirements clarification
 
 Based on client info:
 As a user, I want to create a new account with my name, email, and password so that I can buy and trade stocks. 
-• Default the user’s cash account balance to $5000.00 USD. 
-• A user can only register once with any given email.
 	There will be need for a user object with the possible member fields:
 		name
 		list of stocks held
@@ -12,6 +10,9 @@ As a user, I want to create a new account with my name, email, and password so t
 			userId (int 32)
 			name (varchar 50)
 			email address (varchar 50)
+• Default the user’s cash account balance to $5000.00 USD. 
+• A user can only register once with any given email.
+	maybe have an index of emails?
 
 As a user, I want to authenticate via email and password so that I can access my account.
 	Use Spring Security to handle secure user login?
