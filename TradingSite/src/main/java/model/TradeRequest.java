@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class TradeRequest {
 
     private User user;
@@ -32,5 +34,21 @@ public class TradeRequest {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TradeRequest that = (TradeRequest) o;
+        return amountToBeTraded == that.amountToBeTraded &&
+                Objects.equals(user, that.user) &&
+                transactionType == that.transactionType &&
+                Objects.equals(symbol, that.symbol);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, amountToBeTraded, transactionType, symbol);
     }
 }

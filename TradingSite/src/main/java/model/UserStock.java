@@ -3,23 +3,19 @@ package model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class OwnedStock extends Stock {
+public class UserStock extends Stock {
 
     private int stockId, userId, ownedUnits;
 
-    public OwnedStock(String symbol, BigDecimal price, int availableUnits) {
-        super(symbol, price, availableUnits);
-    }
-
-    public OwnedStock(String symbol, BigDecimal price, int availableUnits, int stockId, int userId, int ownedUnits) {
+    public UserStock(String symbol, BigDecimal price, int availableUnits, int stockId, int userId, int ownedUnits) {
         super(symbol, price, availableUnits);
         this.stockId = stockId;
         this.userId = userId;
         this.ownedUnits = ownedUnits;
     }
 
-    public static OwnedStock convertToOwnedStock(Stock stock, int stockId, int userId, int ownedUnits) {
-        return new OwnedStock(stock.getSymbol(), stock.getPrice(), stock.getAvailableUnits(), stockId, userId, ownedUnits);
+    public static UserStock convertToOwnedStock(Stock stock, int stockId, int userId, int ownedUnits) {
+        return new UserStock(stock.getSymbol(), stock.getPrice(), stock.getAvailableUnits(), stockId, userId, ownedUnits);
     }
 
     public int getStockId() {
@@ -43,10 +39,15 @@ public class OwnedStock extends Stock {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        OwnedStock that = (OwnedStock) o;
+        UserStock that = (UserStock) o;
         return stockId == that.stockId &&
                 userId == that.userId &&
                 ownedUnits == that.ownedUnits;
+    }
+
+    public BigDecimal getTotalValue()
+    {
+        return price.multiply(new BigDecimal(ownedUnits));
     }
 
     @Override

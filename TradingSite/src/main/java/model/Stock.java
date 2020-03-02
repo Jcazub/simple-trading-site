@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Stock {
 
-    private String symbol;
-    private BigDecimal price;
-    private int availableUnits;
+    protected String symbol;
+    protected BigDecimal price;
+    protected int availableUnits;
 
     public Stock(String symbol, BigDecimal price, int availableUnits) {
         this.symbol = symbol;

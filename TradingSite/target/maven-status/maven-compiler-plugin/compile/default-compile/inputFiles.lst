@@ -1,0 +1,10 @@
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/Stock.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/dao/UserDao.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/TradeRequest.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/TransactionType.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/dao/TransactionDao.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/dao/StockDao.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/external/StockAPI.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/User.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/OwnedStock.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/TradingSite/src/main/java/model/Transaction.java
