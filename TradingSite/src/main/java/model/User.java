@@ -11,10 +11,10 @@ public class User {
     private String lastName;
     private String email;
     private BigDecimal currentBalance;
-    private List<Stock> stocksOwned;
+    private List<UserStock> stocksOwned;
     private List<Transaction> transactionsCompleted;
 
-    public User(int userId, String firstName, String lastName, String email, BigDecimal currentBalance, List<Stock> stocksOwned, List<Transaction> transactionsCompleted) {
+    public User(int userId, String firstName, String lastName, String email, BigDecimal currentBalance, List<UserStock> stocksOwned, List<Transaction> transactionsCompleted) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,12 +44,36 @@ public class User {
         return currentBalance;
     }
 
-    public List<Stock> getStocksOwned() {
+    public List<UserStock> getStocksOwned() {
         return stocksOwned;
     }
 
     public List<Transaction> getTransactionsCompleted() {
         return transactionsCompleted;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCurrentBalance(BigDecimal currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public void setStocksOwned(List<UserStock> stocksOwned) {
+        this.stocksOwned = stocksOwned;
+    }
+
+    public void setTransactionsCompleted(List<Transaction> transactionsCompleted) {
+        this.transactionsCompleted = transactionsCompleted;
     }
 
     @Override

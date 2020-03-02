@@ -22,7 +22,7 @@ public class UserStockDaoTest {
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
-        userStockDao = ctx.getBean("stockDao", UserStockDao.class);
+        userStockDao = ctx.getBean("userStockDao", UserStockDao.class);
     }
 
     @Before
@@ -33,11 +33,10 @@ public class UserStockDaoTest {
         {
             userStockDao.deleteStock(currentStock.getStockId());
         }
-
     }
 
     @Test
-    public void addGetOwnedStock()
+    public void testAddGetOwnedStock()
     {
         UserStock stock = PowerMockito.mock(UserStock.class);
 
@@ -49,7 +48,7 @@ public class UserStockDaoTest {
     }
 
     @Test
-    public void deleteOwnedStock()
+    public void testDeleteOwnedStock()
     {
         UserStock stock = PowerMockito.mock(UserStock.class);
         userStockDao.addStock(stock);
@@ -62,7 +61,7 @@ public class UserStockDaoTest {
     }
 
     @Test
-    public void editOwnedStock()
+    public void testEditOwnedStock()
     {
         UserStock stock = generateOwnedStockGeneric();
         userStockDao.addStock(stock);
@@ -75,10 +74,11 @@ public class UserStockDaoTest {
         UserStock retrievedEditedStock = userStockDao.getStock(stock.getStockId());
 
         Assert.assertEquals(stock, retrievedEditedStock);
+        Assert.assertNotEquals(retrievedOriginalStock, retrievedEditedStock);
     }
 
     @Test
-    public void getAllStocks()
+    public void testGetAllStocks()
     {
         UserStock firstStock = generateOwnedStock(1, 1,"APPL");
         UserStock secondStock = generateOwnedStock(2, 1,"GNC");
@@ -90,7 +90,7 @@ public class UserStockDaoTest {
     }
 
     @Test
-    public void getAllStocksByUser()
+    public void testGetAllStocksByUser()
     {
         UserStock firstStock = generateOwnedStock(1, 1, "APPL");
         UserStock secondStock = generateOwnedStock(2, 2, "GNC");
@@ -101,7 +101,7 @@ public class UserStockDaoTest {
     }
 
     @Test
-    public void getAllStocksByUserDescendingInPrice()
+    public void testGetAllStocksByUserDescendingInPrice()
     {
         UserStock firstStock = generateOwnedStock(1, 1, "APPL");
         firstStock.setOwnedUnits(2);
