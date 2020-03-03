@@ -1,16 +1,16 @@
 package service;
 
+import exceptions.MalformedObjectException;
+import exceptions.TransactionNotFoundException;
 import model.Transaction;
 
 import java.util.List;
 
 public interface TransactionService {
-    Transaction addTransaction(Transaction transaction);
-    Transaction editTransaction(Transaction transaction);
-    Transaction getTransaction(int transactionId);
-    void deleteTransaction(int transactionId);
-
+    Transaction addTransaction(Transaction transaction) throws MalformedObjectException;
+    Transaction getTransaction(int transactionId) throws TransactionNotFoundException;
+    void deleteTransaction(int transactionId) throws TransactionNotFoundException;
     List<Transaction> getAllTransactions();
-    List<Transaction> getTransactionsByUser(int userId);
-    List<Transaction> getTransactionsByUserDescendingDateTime(int userId);
+    List<Transaction> getTransactionsByUser(int userId) throws TransactionNotFoundException;
+    List<Transaction> getTransactionsByUserDescendingDateTime(int userId) throws TransactionNotFoundException;
 }

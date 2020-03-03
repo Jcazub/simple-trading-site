@@ -7,15 +7,14 @@ public class UserStock extends Stock {
 
     private int stockId, userId, ownedUnits;
 
-    public UserStock(String symbol, BigDecimal price, int availableUnits, int stockId, int userId, int ownedUnits) {
+    public UserStock(String symbol, BigDecimal price, int availableUnits, int userId, int ownedUnits) {
         super(symbol, price, availableUnits);
-        this.stockId = stockId;
         this.userId = userId;
         this.ownedUnits = ownedUnits;
     }
 
     public static UserStock convertToOwnedStock(Stock stock, int stockId, int userId, int ownedUnits) {
-        return new UserStock(stock.getSymbol(), stock.getPrice(), stock.getAvailableUnits(), stockId, userId, ownedUnits);
+        return new UserStock(stock.getSymbol(), stock.getPrice(), stock.getAvailableUnits(), userId, ownedUnits);
     }
 
     public int getStockId() {
@@ -28,6 +27,14 @@ public class UserStock extends Stock {
 
     public int getOwnedUnits() {
         return ownedUnits;
+    }
+
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setOwnedUnits(int ownedUnits) {

@@ -1,16 +1,19 @@
 package service;
 
+import exceptions.MalformedObjectException;
+import exceptions.StockNotFoundException;
+import exceptions.UserNotFoundException;
 import model.UserStock;
 
 import java.util.List;
 
 public interface UserStockService {
-    UserStock addStock(UserStock stock);
-    UserStock editStock(UserStock stock);
-    UserStock getStock(int stockId);
-    void deleteStock(int stockId);
+    UserStock addStock(UserStock stock) throws MalformedObjectException;
+    UserStock editStock(UserStock stock) throws MalformedObjectException, StockNotFoundException;
+    UserStock getStock(int stockId) throws StockNotFoundException;
+    void deleteStock(int stockId) throws StockNotFoundException;
 
     List<UserStock> getAllStocks();
-    List<UserStock> getStocksByUser(int userId);
-    List<UserStock> getStocksByUserDescendingInPrice(int userId);
+    List<UserStock> getStocksByUser(int userId) throws StockNotFoundException;
+    List<UserStock> getStocksByUserDescendingInPrice(int userId) throws StockNotFoundException;
 }

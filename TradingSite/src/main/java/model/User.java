@@ -14,14 +14,11 @@ public class User {
     private List<UserStock> stocksOwned;
     private List<Transaction> transactionsCompleted;
 
-    public User(int userId, String firstName, String lastName, String email, BigDecimal currentBalance, List<UserStock> stocksOwned, List<Transaction> transactionsCompleted) {
-        this.userId = userId;
+    public User(String firstName, String lastName, String email, BigDecimal currentBalance) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.currentBalance = currentBalance;
-        this.stocksOwned = stocksOwned;
-        this.transactionsCompleted = transactionsCompleted;
     }
 
     public int getUserId() {
@@ -50,6 +47,10 @@ public class User {
 
     public List<Transaction> getTransactionsCompleted() {
         return transactionsCompleted;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setFirstName(String firstName) {

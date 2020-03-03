@@ -11,8 +11,7 @@ public class Transaction {
     private LocalDateTime transactionDateTime;
     private BigDecimal stockPriceAtPurchase;
 
-    public Transaction(int transactionId, int userId, int amountTraded, String symbol, LocalDateTime transactionDateTime, BigDecimal stockPriceAtPurchase) {
-        this.transactionId = transactionId;
+    public Transaction(int userId, int amountTraded, String symbol, LocalDateTime transactionDateTime, BigDecimal stockPriceAtPurchase) {
         this.userId = userId;
         this.amountTraded = amountTraded;
         this.symbol = symbol;
