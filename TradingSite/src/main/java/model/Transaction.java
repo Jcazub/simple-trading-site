@@ -44,6 +44,30 @@ public class Transaction {
         return amountTraded;
     }
 
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setAmountTraded(int amountTraded) {
+        this.amountTraded = amountTraded;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public void setTransactionDateTime(LocalDateTime transactionDateTime) {
+        this.transactionDateTime = transactionDateTime;
+    }
+
+    public void setStockPriceAtPurchase(BigDecimal stockPriceAtPurchase) {
+        this.stockPriceAtPurchase = stockPriceAtPurchase;
+    }
+
     public BigDecimal getTotalPrice() {
         return stockPriceAtPurchase.multiply(new BigDecimal(amountTraded));
     }

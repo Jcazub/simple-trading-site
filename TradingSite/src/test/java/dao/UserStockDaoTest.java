@@ -95,6 +95,9 @@ public class UserStockDaoTest {
         UserStock firstStock = generateOwnedStock(1, 1, "APPL");
         UserStock secondStock = generateOwnedStock(2, 2, "GNC");
 
+        userStockDao.addStock(firstStock);
+        userStockDao.addStock(secondStock);
+
         List<UserStock> stocksOfFirstUser = userStockDao.getStocksByUser(1);
 
         Assert.assertEquals(1, stocksOfFirstUser.size());
