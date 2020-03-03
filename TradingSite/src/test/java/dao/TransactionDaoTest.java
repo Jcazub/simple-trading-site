@@ -1,6 +1,5 @@
 package dao;
 
-import javafx.application.Application;
 import model.Transaction;
 import org.junit.Assert;
 import org.junit.Before;
