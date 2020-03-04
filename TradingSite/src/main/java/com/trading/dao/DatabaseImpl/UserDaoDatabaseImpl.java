@@ -30,7 +30,7 @@ public class UserDaoDatabaseImpl implements UserDao {
     private static final String SELECT_ALL_USERS = "select * from db.users";
 
     private static final String INSERT_USER_ROLE = "insert into db.users_roles (userId, roleType) values (?,?)";
-    private static String ROLE_USER = "ROLE_USER";
+    private static String ROLE_USER = "USER";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)

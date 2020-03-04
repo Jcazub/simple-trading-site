@@ -21,18 +21,18 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
     <!-- SPRING CLOUD AWS CONFIGURATION -->
-    <!--    <aws-context:context-credentials>
-            <aws-context:instance-profile-credentials/>
-        </aws-context:context-credentials>
+<!--        <aws-context:context-credentials>-->
+<!--            <aws-context:instance-profile-credentials/>-->
+<!--        </aws-context:context-credentials>-->
 
-        <aws-context:context-region region="${ec2-region}"/>
+<!--        <aws-context:context-region region="${ec2-region}"/>-->
 
-        <aws-context:context-instance-data />
+<!--        <aws-context:context-instance-data />-->
 
-        <aws-jdbc:data-source
-            db-instance-identifier="${dbinstance}"
-            password="${dbpassword}">
-        </aws-jdbc:data-source>-->
+<!--        <aws-jdbc:data-source-->
+<!--            db-instance-identifier="${dbinstance}"-->
+<!--            password="${dbpassword}">-->
+<!--        </aws-jdbc:data-source>-->
 
     <!--     Bean definitions go here -->
     <tx:annotation-driven/>
@@ -46,57 +46,52 @@
         <property name="url"
                   value="jdbc:mysql://localhost:3306"/>
         <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="password" value=""/>
         <property name="initialSize" value="5"/>
         <property name="maxTotal" value="10"/>
     </bean>
 
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+<!--    <bean id="transactionManager"-->
+<!--          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+<!--        <property name="dataSource" ref="dataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="jdbcTemplate"
-          class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+<!--    &lt;!&ndash; DAO Beans &ndash;&gt;-->
+<!--    <bean id="userDao"-->
+<!--          class="com.trading.dao.DatabaseImpl.UserDaoDatabaseImpl">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
 
-    <!-- DAO Beans -->
-    <bean id="userDao"
-          class="com.trading.dao.DatabaseImpl.UserDaoDatabaseImpl">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
+<!--    <bean id="userStockDao"-->
+<!--          class="com.trading.dao.DatabaseImpl.UserStockDaoDatabaseImpl">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="userStockDao"
-          class="com.trading.dao.DatabaseImpl.UserStockDaoDatabaseImpl">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
+<!--    <bean id="transactionDao"-->
+<!--          class="com.trading.dao.DatabaseImpl.TransactionDaoDatabaseImpl">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="transactionDao"
-          class="com.trading.dao.DatabaseImpl.TransactionDaoDatabaseImpl">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
+<!--    &lt;!&ndash; Service Layer Beans &ndash;&gt;-->
+<!--    <bean id="userService"-->
+<!--          class="com.trading.service.Impl.UserServiceImpl">-->
+<!--        <constructor-arg ref="userDao"/>-->
+<!--    </bean>-->
 
-    <!-- Service Layer Beans -->
-    <bean id="userService"
-          class="com.trading.service.Impl.UserServiceImpl">
-        <constructor-arg ref="userDao"/>
-    </bean>
+<!--    <bean id="userStockService"-->
+<!--          class="com.trading.service.Impl.UserStockServiceImpl">-->
+<!--        <constructor-arg ref="userStockDao"/>-->
+<!--    </bean>-->
 
-    <bean id="userStockService"
-          class="com.trading.service.Impl.UserStockServiceImpl">
-        <constructor-arg ref="userStockDao"/>
-    </bean>
+<!--    <bean id="transactionService"-->
+<!--          class="com.trading.service.Impl.TransactionServiceImpl">-->
+<!--        <constructor-arg ref="transactionDao"/>-->
+<!--    </bean>-->
 
-    <bean id="transactionService"
-          class="com.trading.service.Impl.TransactionServiceImpl">
-        <constructor-arg ref="transactionDao"/>
-    </bean>
-
-    <!-- External API Access Beans -->
-    <bean id="stockAPI"
-          class="com.trading.external.Impl.StockAPIIEX">
-        <constructor-arg ref="transactionService"/>
-        <constructor-arg ref="userStockService"/>
-    </bean>
+<!--    &lt;!&ndash; External API Access Beans &ndash;&gt;-->
+<!--    <bean id="stockAPI"-->
+<!--          class="com.trading.external.Impl.StockAPIIEX">-->
+<!--        <constructor-arg ref="transactionService"/>-->
+<!--        <constructor-arg ref="userStockService"/>-->
+<!--    </bean>-->
 </beans>

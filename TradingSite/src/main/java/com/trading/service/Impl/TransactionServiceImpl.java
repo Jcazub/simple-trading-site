@@ -5,14 +5,18 @@ import com.trading.exceptions.MalformedObjectException;
 import com.trading.exceptions.TransactionNotFoundException;
 import com.trading.model.Transaction;
 import com.trading.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionDao transactionDao;
 
+    @Autowired
     public TransactionServiceImpl(TransactionDao transactionDao)
     {
         this.transactionDao = transactionDao;

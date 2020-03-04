@@ -7,6 +7,8 @@ import com.trading.model.Stock;
 import com.trading.model.TradeRequest;
 import com.trading.model.Transaction;
 import com.trading.model.UserStock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 import pl.zankowski.iextrading4j.client.IEXCloudClient;
 import pl.zankowski.iextrading4j.client.IEXCloudTokenBuilder;
@@ -18,12 +20,14 @@ import com.trading.service.UserStockService;
 
 import java.time.LocalDateTime;
 
+@Repository
 public class StockAPIIEX implements StockAPI {
 
     private final IEXCloudClient cloudClient;
     private TransactionService transactionService;
     private UserStockService userStockService;
 
+    @Autowired
     public StockAPIIEX(TransactionService transactionService, UserStockService userStockService) {
         cloudClient = IEXTradingClient.create(IEXTradingApiVersion.IEX_CLOUD_V1,
                 new IEXCloudTokenBuilder()

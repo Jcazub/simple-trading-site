@@ -6,13 +6,17 @@ import com.trading.exceptions.UserNotFoundException;
 import com.trading.model.User;
 import com.trading.service.UserService;
 import com.trading.utilites.VerificationHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     UserDao userDao;
 
+    @Autowired
     public UserServiceImpl(UserDao userDao)
     {
         this.userDao = userDao;

@@ -6,13 +6,17 @@ import com.trading.exceptions.StockNotFoundException;
 import com.trading.model.UserStock;
 import com.trading.service.UserStockService;
 import com.trading.utilites.VerificationHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserStockServiceImpl implements UserStockService {
 
     private UserStockDao userStockDao;
 
+    @Autowired
     public UserStockServiceImpl(UserStockDao userStockDao)
     {
         this.userStockDao = userStockDao;

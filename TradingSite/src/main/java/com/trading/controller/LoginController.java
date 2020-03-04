@@ -42,8 +42,8 @@ public class LoginController {
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addUser(HttpServletRequest request, Model model) {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
         String email = request.getParameter("email");
 
         String clearPassword = request.getParameter("password");
