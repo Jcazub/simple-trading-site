@@ -1,6 +1,7 @@
 package dao.DatabaseImpl;
 
 import model.Transaction;
+import model.TransactionType;
 import model.User;
 import model.UserStock;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,9 +23,10 @@ public class TradingMappers {
             String symbol = rs.getString("symbol");
             LocalDateTime transactionDateTime = rs.getObject("transactionDateTime", LocalDateTime.class);
             BigDecimal transactionPriceAtPurchase = rs.getBigDecimal("stockPriceAtPurchase");
+            TransactionType transactionType = rs.getObject("transactionType", TransactionType.class);
 
             Transaction transaction = new Transaction(userId, amountTraded, symbol, transactionDateTime,
-                    transactionPriceAtPurchase);
+                    transactionPriceAtPurchase, transactionType);
 
             transaction.setTransactionId(transactionId);
 
@@ -41,8 +43,9 @@ public class TradingMappers {
             String lastName = rs.getString("lastName");
             String email = rs.getString("email");
             BigDecimal currentBalance = rs.getBigDecimal("currentBalance");
+            String password = rs.getString("password");
 
-            User user = new User(firstName, lastName, email, currentBalance);
+            User user = new User(firstName, lastName, email, currentBalance, password);
 
             user.setUserId(userId);
 
@@ -58,10 +61,9 @@ public class TradingMappers {
             int userId = rs.getInt("userId");
             String symbol = rs.getString("symbol");
             BigDecimal price = rs.getBigDecimal("price");
-            int availableUnits = rs.getInt("availableUnits");
             int ownedUnits = rs.getInt("ownedUnits");
 
-            UserStock userStock = new UserStock(symbol, price, availableUnits, userId, ownedUnits);
+            UserStock userStock = new UserStock(symbol, price, userId, ownedUnits);
 
             userStock.setStockId(stockId);
 

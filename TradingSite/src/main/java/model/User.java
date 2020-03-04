@@ -10,15 +10,17 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private BigDecimal currentBalance;
     private List<UserStock> stocksOwned;
     private List<Transaction> transactionsCompleted;
 
-    public User(String firstName, String lastName, String email, BigDecimal currentBalance) {
+    public User(String firstName, String lastName, String email, BigDecimal currentBalance, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.currentBalance = currentBalance;
+        this.password = password;
     }
 
     public int getUserId() {
@@ -77,6 +79,14 @@ public class User {
         this.transactionsCompleted = transactionsCompleted;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +96,7 @@ public class User {
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(currentBalance, user.currentBalance) &&
                 Objects.equals(stocksOwned, user.stocksOwned) &&
                 Objects.equals(transactionsCompleted, user.transactionsCompleted);
@@ -93,6 +104,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, email, currentBalance, stocksOwned, transactionsCompleted);
+        return Objects.hash(userId, firstName, lastName, email, password, currentBalance, stocksOwned, transactionsCompleted);
     }
 }

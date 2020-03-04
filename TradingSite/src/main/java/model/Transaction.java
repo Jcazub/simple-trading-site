@@ -10,13 +10,16 @@ public class Transaction {
     private String symbol;
     private LocalDateTime transactionDateTime;
     private BigDecimal stockPriceAtPurchase;
+    private TransactionType transactionType;
 
-    public Transaction(int userId, int amountTraded, String symbol, LocalDateTime transactionDateTime, BigDecimal stockPriceAtPurchase) {
+    public Transaction(int userId, int amountTraded, String symbol, LocalDateTime transactionDateTime,
+                       BigDecimal stockPriceAtPurchase, TransactionType transactionType) {
         this.userId = userId;
         this.amountTraded = amountTraded;
         this.symbol = symbol;
         this.transactionDateTime = transactionDateTime;
         this.stockPriceAtPurchase = stockPriceAtPurchase;
+        this.transactionType = transactionType;
     }
 
     public int getTransactionId() {
@@ -67,6 +70,14 @@ public class Transaction {
         this.stockPriceAtPurchase = stockPriceAtPurchase;
     }
 
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public BigDecimal getTotalPrice() {
         return stockPriceAtPurchase.multiply(new BigDecimal(amountTraded));
     }
@@ -81,11 +92,12 @@ public class Transaction {
                 amountTraded == that.amountTraded &&
                 Objects.equals(symbol, that.symbol) &&
                 Objects.equals(transactionDateTime, that.transactionDateTime) &&
-                Objects.equals(stockPriceAtPurchase, that.stockPriceAtPurchase);
+                Objects.equals(stockPriceAtPurchase, that.stockPriceAtPurchase) &&
+                transactionType == that.transactionType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, userId, amountTraded, symbol, transactionDateTime, stockPriceAtPurchase);
+        return Objects.hash(transactionId, userId, amountTraded, symbol, transactionDateTime, stockPriceAtPurchase, transactionType);
     }
 }

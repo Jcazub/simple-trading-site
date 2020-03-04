@@ -63,7 +63,8 @@ public class UserServiceImpl implements UserService {
         if (user.getCurrentBalance() == null ||
             VerificationHelper.isStringInvalid(user.getEmail()) ||
             VerificationHelper.isStringInvalid(user.getFirstName()) ||
-            VerificationHelper.isStringInvalid(user.getLastName()))
+            VerificationHelper.isStringInvalid(user.getLastName()) ||
+            VerificationHelper.isStringInvalid(user.getPassword()))
                 return false;
         return true;
     }

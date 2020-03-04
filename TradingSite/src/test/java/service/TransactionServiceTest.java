@@ -1,6 +1,8 @@
 package service;
 
 import dao.TransactionDao;
+import exceptions.MalformedObjectException;
+import exceptions.TransactionNotFoundException;
 import model.Transaction;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +33,7 @@ public class TransactionServiceTest {
     }
 
     @Before
-    public void setUp()
-    {
+    public void setUp() throws TransactionNotFoundException {
         List<Transaction> transactions = transactionService.getAllTransactions();
         for (Transaction currentTransaction : transactions)
         {
@@ -41,8 +42,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    public void testAddGetTransactionSuccess()
-    {
+    public void testAddGetTransactionSuccess() throws MalformedObjectException {
         Transaction transaction = PowerMockito.mock(Transaction.class);
         transactionService.addTransaction(transaction);
     }

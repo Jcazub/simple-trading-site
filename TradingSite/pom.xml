@@ -154,6 +154,11 @@
             <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>pl.zankowski</groupId>
+            <artifactId>iextrading4j-all</artifactId>
+            <version>3.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -176,7 +181,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-    
 </project>

@@ -1,6 +1,7 @@
 package dao;
 
 import model.Transaction;
+import model.TransactionType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -109,8 +110,10 @@ public class TransactionDaoTest {
 
     private Transaction generateTransaction(int transactionId, int userId)
     {
-        return new Transaction(transactionId, userId, 1, "APPL",
-                LocalDateTime.now(), new BigDecimal(1));
+        Transaction transaction = new Transaction(userId, 1, "APPL",
+                LocalDateTime.now(), new BigDecimal(1), TransactionType.BUY);
+        transaction.setTransactionId(transactionId);
+        return transaction;
     }
 
     private class TransactionDateTimeComparator implements Comparator<Transaction> {

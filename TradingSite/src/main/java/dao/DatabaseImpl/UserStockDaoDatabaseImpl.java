@@ -22,9 +22,9 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private static final String INSERT_STOCK = "insert into db.stocks (symbol, price, availableUnits, userId, " +
-            "ownedUnits) values (?,?,?,?,?)";
-    private static final String EDIT_STOCK = "update db.stocks set symbol = ?, price = ?, availableUnits = ?," +
+    private static final String INSERT_STOCK = "insert into db.stocks (symbol, price, userId, " +
+            "ownedUnits) values (?,?,?,?)";
+    private static final String EDIT_STOCK = "update db.stocks set symbol = ?, price = ?," +
             "userId = ?, ownedUnits = ? where stockId = ?";
     private static final String DELETE_STOCK = "delete from db.stocks where stockId = ?";
     private static final String SELECT_STOCK = "select * from db.stocks where stockId = ?";
@@ -37,7 +37,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public UserStock addStock(UserStock stock) {
-        jdbcTemplate.update(INSERT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(), stock.getAvailableUnits(),
+        jdbcTemplate.update(INSERT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(),
                 stock.getUserId(), stock.getOwnedUnits());
         int stockId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         stock.setStockId(stockId);
@@ -47,7 +47,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public UserStock editStock(UserStock stock) {
-        jdbcTemplate.update(EDIT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(), stock.getAvailableUnits(),
+        jdbcTemplate.update(EDIT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(),
                 stock.getUserId(), stock.getOwnedUnits(), stock.getStockId());
         return stock;
     }

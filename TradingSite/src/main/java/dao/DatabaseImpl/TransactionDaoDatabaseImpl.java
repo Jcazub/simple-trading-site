@@ -23,7 +23,7 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
     }
 
     private static final String INSERT_TRANSACTION = "insert into db.transactions (userId, " +
-            "amountTraded, symbol, transactionDateTime, stockPriceAtPurchase) values (?,?,?,?,?)";
+            "amountTraded, symbol, transactionDateTime, stockPriceAtPurchase, transactionType) values (?,?,?,?,?,?)";
     private static final String DELETE_TRANSACTION = "delete from db.transactions where transactionId = ?";
     private static final String SELECT_TRANSACTION = "select * from db.transactions where transactionId = ?";
     private static final String SELECT_ALL_TRANSACTION = "select * from db.transactions";
@@ -35,7 +35,8 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Transaction addTransaction(Transaction transaction) {
         jdbcTemplate.update(INSERT_TRANSACTION, transaction.getUserId(), transaction.getAmountTraded(),
-                transaction.getSymbol(), transaction.getTransactionDateTime(), transaction.getStockPriceAtPurchase());
+                transaction.getSymbol(), transaction.getTransactionDateTime(), transaction.getStockPriceAtPurchase(),
+                transaction.getTransactionType());
         int transactionId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         transaction.setTransactionId(transactionId);
         return transaction;
