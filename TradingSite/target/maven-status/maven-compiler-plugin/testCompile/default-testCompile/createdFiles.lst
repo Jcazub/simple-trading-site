@@ -1,0 +1,6 @@
+com\trading\service\UserServiceTest.class
+com\trading\service\TransactionServiceTest.class
+com\trading\dao\UserDaoTest.class
+com\trading\service\UserStockServiceTest.class
+com\trading\dao\UserStockDaoTest.class
+com\trading\dao\TransactionDaoTest.class
