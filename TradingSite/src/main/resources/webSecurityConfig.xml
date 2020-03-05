@@ -13,13 +13,13 @@
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-    <http pattern="/login" security="none" />
-    <http pattern="/register" security="none" />
-    <http pattern="/addUser" security="none" />
-    <http pattern="/error" security="none" />
-    <http pattern="/css" security="none" />
-    <http pattern="/js" security="none" />
-    <http pattern="/img" security="none" />
+<!--    <http pattern="/login" security="none" />-->
+<!--    <http pattern="/register" security="none" />-->
+<!--    <http pattern="/addUser" security="none" />-->
+<!--    <http pattern="/error" security="none" />-->
+<!--    <http pattern="/css" security="none" />-->
+<!--    <http pattern="/js" security="none" />-->
+<!--    <http pattern="/img" security="none" />-->
 
     <http auto-config="true" use-expressions="false" disable-url-rewriting="false">
         <csrf disabled="true"/>
@@ -27,30 +27,32 @@
         <!--                    login-page="/login"-->
         <!--                    authentication-failure-url="/login?login_error=1"/>-->
 
-        <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <intercept-url pattern="/"
-                       access="ROLE_USER"/>
+<!--        <intercept-url pattern="/"-->
+<!--                       access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
 
-        <form-login login-page="/login"
+        <form-login login-page="/login" login-processing-url="/perform_login"
                     default-target-url="/portfolio" authentication-failure-url="/login?login_error=1"
                     always-use-default-target="true"/>
 
         <logout logout-url="/logout" logout-success-url="/login" />
 
-        <intercept-url pattern="/"
-                       access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <intercept-url pattern="/index"
-                       access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <!--        <intercept-url pattern="/**"-->
-        <!--                       access="ROLE_USER"/>-->
-
         <!-- Content related -->
-        <intercept-url pattern="/transactions"
-                       access="ROLE_USER" />
-        <intercept-url pattern="/stocks"
-                       access="ROLE_USER" />
-        <intercept-url pattern="/buyStock"
-                       access="ROLE_USER" />
+<!--        <intercept-url pattern="/transactions"-->
+<!--                       access="ROLE_USER" />-->
+<!--        <intercept-url pattern="/stocks"-->
+<!--                       access="ROLE_USER" />-->
+<!--        <intercept-url pattern="/buyStock"-->
+<!--                       access="ROLE_USER" />-->
+
+<!--        <intercept-url pattern="/index"-->
+<!--                       access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+<!--        <intercept-url pattern="/"-->
+<!--                       access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+<!--        <intercept-url pattern="/**"-->
+<!--                       access="ROLE_USER"/>-->
+
+<!--        <intercept-url pattern="/"-->
+<!--                       access="ROLE_USER"/>-->
 
     </http>
     <authentication-manager>

@@ -36,7 +36,7 @@
           name="f"
           role="form"
           method="POST"
-          action="login">
+          action="perform_login">
         <div class="form-group">
             <label for="username" class="col-md-4 control-label">Email:</label>
             <div class="col-md-4">
