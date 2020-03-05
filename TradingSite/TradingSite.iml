@@ -20,7 +20,9 @@
       <configuration>
         <fileset id="fileset" name="Spring Persistence" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/spring-persistence.xml</file>
-          <file>file://$MODULE_DIR$/web/WEB-INF/spring-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/webSecurityConfig.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-dispatcher-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-security.xml</file>
         </fileset>
       </configuration>
     </facet>

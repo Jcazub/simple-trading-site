@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html class="login-html">
 <head>
@@ -31,26 +33,29 @@
         <h3 style="text-align:center;">Wrong id or password!</h3>
     </c:if>
     <form class="form-horizontal"
+          name="f"
           role="form"
-          method="post"
-          action="j_spring_security_check">
+          method="POST"
+          action="login">
         <div class="form-group">
-            <label for="j_username" class="col-md-4 control-label">Username:</label>
+            <label for="username" class="col-md-4 control-label">Email:</label>
             <div class="col-md-4">
-                <input type="text"
+                <input type="email"
                        class="form-control"
-                       name="j_username"
-                       placeholder="Username"
+                       id="username"
+                       name="username"
+                       placeholder="Email"
                        maxlength="50"
                        required/>
             </div>
         </div>
         <div class="form-group">
-            <label for="j_password" class="col-md-4 control-label">Password:</label>
+            <label for="password" class="col-md-4 control-label">Password:</label>
             <div class="col-md-4">
                 <input type="password"
                        class="form-control"
-                       name="j_password"
+                       id="password"
+                       name="password"
                        placeholder="Password"
                        maxlength="50"
                        required/>
@@ -59,12 +64,20 @@
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
                 <input type="submit"
+                       name="submit"
                        class="btn btn-default"
-                       id="search-button"
+                       id="submit-login-button"
                        value="Sign In"/>
             </div>
         </div>
     </form>
+
+    <div class="col-md-offset-4 col-md-8">
+        <a  href="${pageContext.request.contextPath}/register"
+               class="btn btn-default"
+               id="register-button">Register</a>
+    </div>
+
 </div>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
 <div class="w3-container">

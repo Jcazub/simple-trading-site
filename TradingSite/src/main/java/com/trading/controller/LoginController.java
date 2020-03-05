@@ -25,13 +25,13 @@ public class LoginController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showLoginFor() {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String showLoginForm() {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showLoginForm() {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String logIn() {
         return "login";
     }
 
