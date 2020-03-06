@@ -30,11 +30,6 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String logIn() {
-        return "login";
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String showRegistrationForm() {
         return "register";
