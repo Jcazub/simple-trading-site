@@ -21,16 +21,16 @@ import javax.xml.crypto.Data;
 @Profile("!https")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private DataSource dataSource;
 
-    private static final String USERS_QUERY = "select email AS username, password from db.users where email=?;";
+    private static final String USERS_QUERY = "select email as username, password, 'true' as enabled from db.users where email=?;";
     private static final String AUTHORITIES_QUERY = "select u.email AS username, ur.roleType from db.users u join " +
             "db.users_roles ur on u.userID = ur.userID where u.email=?;";
 
     @Autowired
-    public SecurityConfig() {
+    public SecurityConfig(DataSource dataSource) {
         super();
+        this.dataSource = dataSource;
     }
 
     @Override
@@ -38,11 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //        auth.inMemoryAuthentication()
 //                .withUser("user@gmail.com").password(passwordEncoder().encode("pass"))
-//                .roles("USER").and();
+//                .roles("USER");
 
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(USERS_QUERY)
-                .authoritiesByUsernameQuery(AUTHORITIES_QUERY);
+                .authoritiesByUsernameQuery(AUTHORITIES_QUERY)
+                .passwordEncoder(passwordEncoder());
 
     }
 
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/transactions*").hasRole("USER")
-                .antMatchers("/portfolio*").hasRole("USER")
+                .antMatchers("/portfolio*").authenticated()
                 .antMatchers("/buyStock*").hasRole("USER")
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/register*").permitAll()

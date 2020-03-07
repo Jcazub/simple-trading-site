@@ -4,6 +4,9 @@ import com.trading.dao.UserDao;
 import com.trading.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +18,12 @@ import java.util.List;
 public class UserDaoDatabaseImpl implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
+    private DataSource dataSource;
 
     @Autowired
     public UserDaoDatabaseImpl(DataSource dataSource)
     {
+        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -35,9 +40,23 @@ public class UserDaoDatabaseImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User addUser(User user) {
-        jdbcTemplate.update(INSERT_USER, user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getCurrentBalance().doubleValue(), user.getPassword());
-        int userId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+        SqlParameterSource sps = new MapSqlParameterSource()
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("email", user.getEmail())
+                .addValue("currentBalance", user.getCurrentBalance().doubleValue())
+                .addValue("password", user.getPassword());
+
+//        jdbcTemplate.update(INSERT_USER, user.getFirstName(), user.getLastName(), user.getEmail(),
+//                user.getCurrentBalance().doubleValue(), user.getPassword());
+
+        int userId = new SimpleJdbcInsert(dataSource)
+                .withTableName("db.users")
+                .usingGeneratedKeyColumns("userId")
+                .executeAndReturnKey(sps)
+                .intValue();
+
+                //jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         user.setUserId(userId);
         addUserRole(userId);
         return user;
