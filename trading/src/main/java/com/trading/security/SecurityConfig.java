@@ -1,25 +1,34 @@
 package com.trading.security;
 
-import com.trading.security.handlers.CustomAuthenticationFailureHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 
 @Configuration
 @EnableWebSecurity
 @Profile("!https")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private DataSource dataSource;
+
+    private static final String USERS_QUERY = "select email AS username, password from db.users where email=?;";
+    private static final String AUTHORITIES_QUERY = "select u.email AS username, ur.roleType from db.users u join " +
+            "db.users_roles ur on u.userID = ur.userID where u.email=?;";
+
+    @Autowired
     public SecurityConfig() {
         super();
     }
@@ -27,9 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.inMemoryAuthentication()
-                .withUser("user@gmail.com").password(passwordEncoder().encode("pass"))
-                .roles("USER").and();
+//        auth.inMemoryAuthentication()
+//                .withUser("user@gmail.com").password(passwordEncoder().encode("pass"))
+//                .roles("USER").and();
+
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(USERS_QUERY)
+                .authoritiesByUsernameQuery(AUTHORITIES_QUERY);
 
     }
 
@@ -56,7 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/portfolio", true)
                 .failureUrl("/login?login_error=1")
-                .failureHandler(authenticationFailureHandler())
                 .and()
                 .logout()
                 .logoutUrl("/perform_logout")
@@ -65,12 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new CustomAuthenticationFailureHandler();
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

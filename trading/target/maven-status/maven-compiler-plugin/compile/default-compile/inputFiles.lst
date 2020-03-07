@@ -14,6 +14,7 @@
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/controller/IndexController.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/AppInitializer.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/service/Impl/UserServiceImpl.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/security/handlers/CustomExceptionHandler.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/utilites/VerificationHelper.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/dao/DatabaseImpl/UserStockDaoDatabaseImpl.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/dao/DatabaseImpl/TransactionDaoDatabaseImpl.java
@@ -28,10 +29,9 @@
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/SpringConfig.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/exceptions/MalformedObjectException.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/dao/TransactionDao.java
-/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/security/handlers/CustomAuthenticationFailureHandler.java
-/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/controller/ErrorController.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/model/TradeRequest.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/controller/TradeController.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/model/Transaction.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/security/SecurityConfig.java
+/Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/controller/CustomErrorController.java
 /Users/jesseazubuike/Documents/Projects.nosync/InterviewChallenges/simple-trading-site/trading/src/main/java/com/trading/controller/TransactionController.java

@@ -21,7 +21,10 @@ public class AppInitializer implements WebApplicationInitializer {
         root.scan("com.trading");
         sc.addListener(new ContextLoaderListener(root));
 
-        ServletRegistration.Dynamic appServlet = sc.addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(new GenericWebApplicationContext());
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
+        ServletRegistration.Dynamic appServlet = sc.addServlet("mvc", dispatcherServlet);
         appServlet.setLoadOnStartup(1);
         appServlet.addMapping("/");
 

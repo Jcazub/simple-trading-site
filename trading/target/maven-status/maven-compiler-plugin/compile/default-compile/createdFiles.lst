@@ -10,6 +10,7 @@ com/trading/service/UserService.class
 com/trading/dao/DatabaseImpl/UserStockDaoDatabaseImpl.class
 com/trading/external/Impl/StockAPIIEX.class
 com/trading/controller/TransactionController.class
+com/trading/security/handlers/CustomExceptionHandler.class
 com/trading/AppInitializer.class
 com/trading/exceptions/TransactionNotFoundException.class
 com/trading/exceptions/UserNotFoundException.class
@@ -18,11 +19,10 @@ com/trading/exceptions/MalformedObjectException.class
 com/trading/service/UserStockService.class
 com/trading/model/User.class
 com/trading/dao/UserDao.class
-com/trading/security/handlers/CustomAuthenticationFailureHandler.class
 com/trading/controller/IndexController.class
-com/trading/controller/ErrorController.class
 com/trading/service/TransactionService.class
 com/trading/service/Impl/UserServiceImpl.class
+com/trading/controller/CustomErrorController.class
 com/trading/controller/LoginController.class
 com/trading/dao/DatabaseImpl/UserDaoDatabaseImpl.class
 com/trading/utilites/VerificationHelper.class

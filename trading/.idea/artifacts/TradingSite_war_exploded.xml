@@ -14,21 +14,21 @@
           <element id="module-output" name="TradingSite" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.3.0.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjtools:1.8.7" />
