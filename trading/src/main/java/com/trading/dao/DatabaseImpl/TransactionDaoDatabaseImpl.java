@@ -28,7 +28,7 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
     private static final String SELECT_TRANSACTION = "select * from db.transactions where transactionId = ?";
     private static final String SELECT_ALL_TRANSACTION = "select * from db.transactions";
     private static final String SELECT_ALL_TRANSACTIONS_BY_USER = "select * from transactions where userId = ?";
-    private static final String SELECT_ALL_TRANSACTIONS_BY_USER_DESCENDING_DATE_TIME = "select * from db.transactions" +
+    private static final String SELECT_ALL_TRANSACTIONS_BY_USER_DESCENDING_DATE_TIME = "select * from db.transactions " +
             "where userId = ? ORDER BY transactionDateTime DESC";
 
     @Override
@@ -36,7 +36,7 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
     public Transaction addTransaction(Transaction transaction) {
         jdbcTemplate.update(INSERT_TRANSACTION, transaction.getUserId(), transaction.getAmountTraded(),
                 transaction.getSymbol(), transaction.getTransactionDateTime(), transaction.getStockPriceAtPurchase(),
-                transaction.getTransactionType());
+                transaction.getTransactionType().toString());
         int transactionId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         transaction.setTransactionId(transactionId);
         return transaction;

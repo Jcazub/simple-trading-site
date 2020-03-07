@@ -22,6 +22,7 @@ com\trading\dao\DatabaseImpl\UserStockDaoDatabaseImpl.class
 com\trading\dao\DatabaseImpl\TradingMappers$StockMapper.class
 com\trading\dao\DatabaseImpl\TradingMappers$UserMapper.class
 com\trading\service\Impl\TransactionServiceImpl.class
+com\trading\exceptions\NotEnoughFundsException.class
 com\trading\AppInitializer.class
 com\trading\dao\TransactionDao.class
 com\trading\service\UserStockService.class

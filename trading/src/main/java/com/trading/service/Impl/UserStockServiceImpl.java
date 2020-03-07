@@ -75,8 +75,8 @@ public class UserStockServiceImpl implements UserStockService {
     {
         if (VerificationHelper.isStringInvalid(stock.getSymbol()) ||
             VerificationHelper.isBigDecimalInvalid(stock.getPrice()) ||
-            stock.getOwnedUnits() > -1 ||
-            stock.getUserId() > -1)
+            stock.getOwnedUnits() < -1 ||
+            stock.getUserId() < -1)
                 return false;
         return true;
     }

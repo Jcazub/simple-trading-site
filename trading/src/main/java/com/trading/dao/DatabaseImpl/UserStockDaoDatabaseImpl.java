@@ -30,8 +30,8 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     private static final String SELECT_STOCK = "select * from db.stocks where stockId = ?";
     private static final String SELECT_ALL_STOCKS = "select * from db.stocks";
     private static final String SELECT_ALL_STOCKS_BY_USER = "select * from db.stocks where userId = ?";
-    private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from db.stocks where" +
-            "userId = ? ORDER BY CALC";
+    private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from db.stocks where " +
+            "userId = ? ORDER BY price DESC";
 
 
     @Override

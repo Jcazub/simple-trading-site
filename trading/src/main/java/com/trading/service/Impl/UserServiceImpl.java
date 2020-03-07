@@ -7,6 +7,7 @@ import com.trading.model.User;
 import com.trading.service.UserService;
 import com.trading.utilites.VerificationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,15 @@ public class UserServiceImpl implements UserService {
         if (userId < 1) throw new UserNotFoundException();
 
         return userDao.getUser(userId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        if (VerificationHelper.isStringInvalid(email))
+        {
+            throw new UserNotFoundException();
+        }
+        return userDao.getUserByEmail(email);
     }
 
     @Override

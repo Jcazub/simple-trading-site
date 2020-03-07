@@ -35,10 +35,11 @@
           action="addUser">
 
         <div class="form-group">
-            <label for="firstname" class="col-md-4 control-label">First Name:</label>
+            <label for="register-firstname" class="col-md-4 control-label">First Name:</label>
             <div class="col-md-4">
                 <input type="text"
                        class="form-control"
+                       id="register-firstname"
                        name="firstname"
                        placeholder="First Name"
                        maxlength="50"
@@ -47,10 +48,11 @@
         </div>
 
         <div class="form-group">
-            <label for="lastname" class="col-md-4 control-label">Last Name:</label>
+            <label for="register-lastname" class="col-md-4 control-label">Last Name:</label>
             <div class="col-md-4">
                 <input type="text"
                        class="form-control"
+                       id="register-lastname"
                        name="lastname"
                        placeholder="Last Name"
                        maxlength="50"
@@ -59,10 +61,11 @@
         </div>
 
         <div class="form-group">
-            <label for="email" class="col-md-4 control-label">Email:</label>
+            <label for="register-email" class="col-md-4 control-label">Email:</label>
             <div class="col-md-4">
                 <input type="email"
                        class="form-control"
+                       id="register-email"
                        name="email"
                        placeholder="Email"
                        maxlength="50"
@@ -71,10 +74,11 @@
         </div>
 
         <div class="form-group">
-            <label for="password" class="col-md-4 control-label">Password:</label>
+            <label for="register-password" class="col-md-4 control-label">Password:</label>
             <div class="col-md-4">
                 <input type="password"
                        class="form-control"
+                       id="register-password"
                        name="password"
                        placeholder="Password"
                        maxlength="50"

@@ -5,6 +5,7 @@ import com.trading.exceptions.MalformedObjectException;
 import com.trading.exceptions.TransactionNotFoundException;
 import com.trading.model.Transaction;
 import com.trading.service.TransactionService;
+import com.trading.utilites.VerificationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,12 +64,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     private boolean verifyTransactionNotNull(Transaction transaction)
     {
-        if (transaction.getUserId() < 1 ||
-        transaction.getSymbol() == null ||
-        transaction.getSymbol().trim().equals("") ||
+        if (VerificationHelper.isStringInvalid(transaction.getSymbol()) ||
         transaction.getAmountTraded() < 1 ||
-        transaction.getStockPriceAtPurchase() == null ||
-        transaction.getStockPriceAtPurchase().compareTo(new BigDecimal(0)) <= 0 ||
+        VerificationHelper.isBigDecimalInvalid(transaction.getStockPriceAtPurchase())||
         transaction.getTransactionDateTime() == null)
             return false;
         return true;

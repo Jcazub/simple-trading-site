@@ -11,7 +11,7 @@ public class UserNotFoundException extends Exception {
     }
 
     public UserNotFoundException() {
-        super("Requested transaction could not be retrieved");
+        super("Requested user could not be retrieved");
     }
 
 }

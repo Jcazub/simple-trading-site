@@ -79,6 +79,14 @@ public class User {
         this.transactionsCompleted = transactionsCompleted;
     }
 
+    public BigDecimal getTotalPorfolioValue() {
+        BigDecimal totalValue = new BigDecimal(0);
+        for (UserStock currentUserStock : getStocksOwned()) {
+            totalValue.add(currentUserStock.getTotalValue());
+        }
+        return totalValue;
+    }
+
     public String getPassword() {
         return password;
     }

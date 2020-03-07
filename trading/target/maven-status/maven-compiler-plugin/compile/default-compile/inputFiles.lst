@@ -32,6 +32,7 @@ G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\jav
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\service\Impl\TransactionServiceImpl.java
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\controller\TransactionController.java
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\dao\DatabaseImpl\UserDaoDatabaseImpl.java
+G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\exceptions\NotEnoughFundsException.java
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\utilites\VerificationHelper.java
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\dao\DatabaseImpl\TransactionDaoDatabaseImpl.java
 G:\Coding\Projects\Interview Challenges\Simple Trading Site\trading\src\main\java\com\trading\dao\UserDao.java

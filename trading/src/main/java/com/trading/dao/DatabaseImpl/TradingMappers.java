@@ -23,7 +23,7 @@ public class TradingMappers {
             String symbol = rs.getString("symbol");
             LocalDateTime transactionDateTime = rs.getObject("transactionDateTime", LocalDateTime.class);
             BigDecimal transactionPriceAtPurchase = rs.getBigDecimal("stockPriceAtPurchase");
-            TransactionType transactionType = rs.getObject("transactionType", TransactionType.class);
+            TransactionType transactionType = TransactionType.valueOf(rs.getString("transactionType"));
 
             Transaction transaction = new Transaction(userId, amountTraded, symbol, transactionDateTime,
                     transactionPriceAtPurchase, transactionType);

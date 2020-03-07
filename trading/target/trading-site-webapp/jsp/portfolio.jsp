@@ -27,6 +27,42 @@
 <body>
 <jsp:include page="_nav.jsp"/>
 <h1>PORTFOLIO</h1>
+<form class="form-horizontal"
+      name="f"
+      role="form"
+      method="POST"
+      action="buyStock">
+    <div class="form-group">
+        <label for="buy-symbol" class="col-md-4 control-label"></label>
+        <div class="col-md-4">
+            <input type="text"
+                   id="buy-symbol"
+                   name="symbol"
+                   placeholder="Ticker"
+                   maxlength="50"
+                   required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="buy-amount" class="col-md-4 control-label"></label>
+        <div class="col-md-4">
+            <input type="text"
+                   id="buy-amount"
+                   name="amount"
+                   placeholder="Qty"
+                   maxlength="50"
+                   required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="text-center">
+            <input type="submit"
+                   name="submit"
+                   class="btn btn-default"
+                   value="Buy"/>
+        </div>
+    </div>
+</form>
 <jsp:include page="_footer.jsp"/>
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->

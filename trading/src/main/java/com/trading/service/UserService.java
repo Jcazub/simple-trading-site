@@ -10,6 +10,7 @@ public interface UserService {
     User addUser(User user) throws MalformedObjectException;
     User editUser(User user) throws MalformedObjectException, UserNotFoundException;
     User getUser(int userId) throws UserNotFoundException;
+    User getUserByEmail(String email) throws UserNotFoundException;
     void deleteUser(int userId) throws UserNotFoundException;
 
     List<User> getAllUsers();

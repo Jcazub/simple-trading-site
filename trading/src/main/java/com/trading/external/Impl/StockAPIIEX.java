@@ -1,6 +1,7 @@
 package com.trading.external.Impl;
 
 import com.trading.exceptions.MalformedObjectException;
+import com.trading.exceptions.NotEnoughFundsException;
 import com.trading.exceptions.StockNotFoundException;
 import com.trading.external.StockAPI;
 import com.trading.model.Stock;
@@ -18,6 +19,7 @@ import pl.zankowski.iextrading4j.client.rest.request.stocks.QuoteRequestBuilder;
 import com.trading.service.TransactionService;
 import com.trading.service.UserStockService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Repository
@@ -29,7 +31,7 @@ public class StockAPIIEX implements StockAPI {
 
     @Autowired
     public StockAPIIEX(TransactionService transactionService, UserStockService userStockService) {
-        cloudClient = IEXTradingClient.create(IEXTradingApiVersion.IEX_CLOUD_V1,
+        cloudClient = IEXTradingClient.create(IEXTradingApiVersion.IEX_CLOUD_V1_SANDBOX,
                 new IEXCloudTokenBuilder()
                         .withPublishableToken("Tpk_18dfe6cebb4f41ffb219b9680f9acaf2")
                         .build());
@@ -49,18 +51,29 @@ public class StockAPIIEX implements StockAPI {
     }
 
     @Override
-    public UserStock buyStock(TradeRequest tradeRequest) throws StockNotFoundException, MalformedObjectException {
+    public UserStock buyStock(TradeRequest tradeRequest) throws StockNotFoundException, MalformedObjectException, NotEnoughFundsException {
         Stock stockToBeBought = getStockInfo(tradeRequest.getSymbol());
 
-        Transaction transaction = new Transaction(tradeRequest.getUser().getUserId(),
-                tradeRequest.getAmountToBeTraded(), tradeRequest.getSymbol(), LocalDateTime.now(),
-                stockToBeBought.getPrice(), tradeRequest.getTransactionType());
+        BigDecimal purchasePrice = stockToBeBought.getPrice().multiply(new BigDecimal(tradeRequest.getAmountToBeTraded()));
 
-        transaction = transactionService.addTransaction(transaction);
+        if (doesUserHaveEnoughFunds(tradeRequest, purchasePrice))
+        {
+            Transaction transaction = new Transaction(tradeRequest.getUser().getUserId(),
+                    tradeRequest.getAmountToBeTraded(), tradeRequest.getSymbol(), LocalDateTime.now(),
+                    stockToBeBought.getPrice(), tradeRequest.getTransactionType());
 
-        UserStock boughtStock = UserStock.convertToOwnedStock(stockToBeBought, tradeRequest.getUser().getUserId(),
-                transaction.getUserId());
+            transaction = transactionService.addTransaction(transaction);
 
-        return userStockService.addStock(boughtStock);
+            UserStock boughtStock = UserStock.convertToOwnedStock(stockToBeBought, tradeRequest.getUser().getUserId(),
+                    transaction.getUserId());
+
+            return userStockService.addStock(boughtStock);
+        } else {
+            throw new NotEnoughFundsException();
+        }
+    }
+
+    private boolean doesUserHaveEnoughFunds(TradeRequest tradeRequest, BigDecimal totalPrice) {
+        return tradeRequest.getUser().getCurrentBalance().compareTo(totalPrice) >= 0;
     }
 }

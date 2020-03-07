@@ -32,6 +32,7 @@ public class UserDaoDatabaseImpl implements UserDao {
     private static final String EDIT_USER = "update db.users set firstName = ?, lastName = ?, email = ?," +
             "currentBalance = ?, password = ? where userId = ?";
     private static final String SELECT_USER = "select * from db.users where userId = ?";
+    private static final String SELECT_USER_BY_EMAIL = "select * from db.users where email = ?";
     private static final String SELECT_ALL_USERS = "select * from db.users";
 
     private static final String INSERT_USER_ROLE = "insert into db.users_roles (userId, roleType) values (?,?)";
@@ -74,6 +75,11 @@ public class UserDaoDatabaseImpl implements UserDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public User getUser(int userId) {
         return jdbcTemplate.queryForObject(SELECT_USER, new TradingMappers.UserMapper(), userId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_EMAIL, new TradingMappers.UserMapper(), email);
     }
 
     @Override
