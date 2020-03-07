@@ -1,6 +1,7 @@
 package com.trading.service.Impl;
 
 import com.trading.dao.UserDao;
+import com.trading.exceptions.EmailAlreadyInUseException;
 import com.trading.exceptions.MalformedObjectException;
 import com.trading.exceptions.UserNotFoundException;
 import com.trading.model.User;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) throws MalformedObjectException {
+    public User addUser(User user) throws MalformedObjectException, EmailAlreadyInUseException {
         if (verifyUserNotNull(user)) {
             return userDao.addUser(user);
         } else {

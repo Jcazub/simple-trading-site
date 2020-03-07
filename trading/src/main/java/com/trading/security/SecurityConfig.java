@@ -23,9 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private DataSource dataSource;
 
-    private static final String USERS_QUERY = "select email as username, password, 'true' as enabled from db.users where email=?;";
-    private static final String AUTHORITIES_QUERY = "select u.email AS username, ur.roleType from db.users u join " +
-            "db.users_roles ur on u.userID = ur.userID where u.email=?;";
+    private static final String USERS_QUERY = "select email as username, password, 'true' as enabled from users where email=?;";
+    private static final String AUTHORITIES_QUERY = "select email AS username, roleType from users u join " +
+            "users_roles ur on u.userID = ur.userID where u.email=?;";
 
     @Autowired
     public SecurityConfig(DataSource dataSource) {

@@ -57,15 +57,16 @@ public class SpringConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/db?useSSL=false");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
+        String database_url = "jdbc:mysql://" + env.getRequiredProperty("RDS_HOSTNAME")
+                + ":" + env.getRequiredProperty("RDS_PORT")
+                + "/" + env.getRequiredProperty("RDS_DB_NAME")
+                + "?useSSL=false";
 
-//        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl(database_url);
+        dataSource.setUsername(env.getRequiredProperty("RDS_USERNAME"));
+        dataSource.setPassword(env.getRequiredProperty("RDS_PASSWORD"));
+
         return dataSource;
     }
 
@@ -90,4 +91,5 @@ public class SpringConfig implements WebMvcConfigurer {
         resolver.setExceptionAttribute("exception");
         return resolver;
     }
+
 }

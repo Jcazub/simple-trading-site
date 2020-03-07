@@ -6,8 +6,7 @@
 <html>
 <head>
     <title>Trading Site</title>
-    <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <jsp:include page="_css.jsp"/>
 </head>
 <body>
 <div class="container">
@@ -25,8 +24,6 @@
         <h3>${error_human}</h3>
     </div>
     <jsp:include page="_footer.jsp"/>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <jsp:include page="_js.jsp"/>
 </body>
 </html>

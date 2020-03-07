@@ -7,9 +7,11 @@ com\trading\security\handlers\CustomExceptionResolver.class
 com\trading\service\Impl\UserStockServiceImpl.class
 com\trading\controller\TradeController.class
 com\trading\external\Impl\StockAPIIEX.class
+com\trading\exceptions\EmailAlreadyInUseException.class
 com\trading\service\UserService.class
 com\trading\model\UserStock.class
 com\trading\dao\DatabaseImpl\TradingMappers$TransactionMapper.class
+com\trading\utilites\DatabaseHelper.class
 com\trading\dao\DatabaseImpl\UserDaoDatabaseImpl.class
 com\trading\service\Impl\UserServiceImpl.class
 com\trading\controller\TransactionController.class

@@ -2,11 +2,15 @@ package com.trading.dao.DatabaseImpl;
 
 import com.trading.dao.UserStockDao;
 import com.trading.model.UserStock;
+import com.trading.utilites.DatabaseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,24 +21,24 @@ import java.util.List;
 @Repository
 public class UserStockDaoDatabaseImpl implements UserStockDao {
 
+    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public UserStockDaoDatabaseImpl(DataSource dataSource)
     {
+        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private static final String INSERT_STOCK = "insert into db.stocks (symbol, price, userId, " +
-            "ownedUnits) values (?,?,?,?)";
-    private static final String EDIT_STOCK = "update db.stocks set symbol = ?, price = ?," +
+    private static final String EDIT_STOCK = "update stocks set symbol = ?, price = ?," +
             "userId = ?, ownedUnits = ? where stockId = ?";
-    private static final String DELETE_STOCK = "delete from db.stocks where stockId = ?";
-    private static final String SELECT_STOCK = "select * from db.stocks where stockId = ?";
-    private static final String SELECT_STOCK_BY_SYMBOL = "select * from db.stocks where symbol = ?";
-    private static final String SELECT_ALL_STOCKS = "select * from db.stocks";
-    private static final String SELECT_ALL_STOCKS_BY_USER = "select * from db.stocks where userId = ?";
-    private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from db.stocks where " +
+    private static final String DELETE_STOCK = "delete from stocks where stockId = ?";
+    private static final String SELECT_STOCK = "select * from stocks where stockId = ?";
+    private static final String SELECT_STOCK_BY_SYMBOL = "select * from stocks where symbol = ?";
+    private static final String SELECT_ALL_STOCKS = "select * from stocks";
+    private static final String SELECT_ALL_STOCKS_BY_USER = "select * from stocks where userId = ?";
+    private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from stocks where " +
             "userId = ? ORDER BY price DESC";
 
 
@@ -44,9 +48,18 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
         UserStock retrievedStock = getStockBySymbol(stock.getSymbol());
 
         if (retrievedStock == null) {
-            jdbcTemplate.update(INSERT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(),
-                    stock.getUserId(), stock.getOwnedUnits());
-            int stockId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+            SqlParameterSource sps = new MapSqlParameterSource()
+                    .addValue("symbol", stock.getSymbol())
+                    .addValue("price", stock.getTotalValue().doubleValue())
+                    .addValue("userId", stock.getUserId())
+                    .addValue("ownedUnits", stock.getOwnedUnits());
+
+            int stockId = new SimpleJdbcInsert(dataSource)
+                    .withTableName("stocks")
+                    .usingGeneratedKeyColumns("stockId")
+                    .executeAndReturnKey(sps)
+                    .intValue();
+
             stock.setStockId(stockId);
 
             return stock;
@@ -78,7 +91,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
 
     @Override
     public UserStock getStockBySymbol(String symbol) {
-        return queryForNullableObject(SELECT_STOCK_BY_SYMBOL, new TradingMappers.StockMapper(), symbol);
+        return DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_STOCK_BY_SYMBOL, new TradingMappers.StockMapper(), symbol);
     }
 
     @Override
@@ -103,19 +116,5 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserStock> getStocksByUserDescendingInPrice(int userId) {
         return jdbcTemplate.query(SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE, new TradingMappers.StockMapper(), userId);
-    }
-
-    private <T> T queryForNullableObject(String sql, RowMapper<T> rowMapper, Object argument) throws DataAccessException {
-        List<T> results = jdbcTemplate.query(sql, rowMapper, argument);
-
-        if (results == null || results.isEmpty()) {
-            return null;
-        }
-        else if (results.size() > 1) {
-            throw new IncorrectResultSizeDataAccessException(1, results.size());
-        }
-        else{
-            return results.iterator().next();
-        }
     }
 }

@@ -1,7 +1,9 @@
 package com.trading.dao.DatabaseImpl;
 
 import com.trading.dao.UserDao;
+import com.trading.exceptions.EmailAlreadyInUseException;
 import com.trading.model.User;
+import com.trading.utilites.DatabaseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,8 +19,8 @@ import java.util.List;
 @Repository
 public class UserDaoDatabaseImpl implements UserDao {
 
-    private JdbcTemplate jdbcTemplate;
     private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public UserDaoDatabaseImpl(DataSource dataSource)
@@ -27,20 +29,24 @@ public class UserDaoDatabaseImpl implements UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private static final String INSERT_USER = "insert into db.users (firstName, lastName, email, currentBalance, password) values (?,?,?,?,?)";
-    private static final String DELETE_USER = "delete from db.users where userId = ?";
-    private static final String EDIT_USER = "update db.users set firstName = ?, lastName = ?, email = ?," +
+    private static final String DELETE_USER = "delete from users where userId = ?";
+    private static final String EDIT_USER = "update users set firstName = ?, lastName = ?, email = ?," +
             "currentBalance = ?, password = ? where userId = ?";
-    private static final String SELECT_USER = "select * from db.users where userId = ?";
-    private static final String SELECT_USER_BY_EMAIL = "select * from db.users where email = ?";
-    private static final String SELECT_ALL_USERS = "select * from db.users";
+    private static final String SELECT_USER = "select * from users where userId = ?";
+    private static final String SELECT_USER_BY_EMAIL = "select * from users where email = ?";
+    private static final String SELECT_ALL_USERS = "select * from users";
 
-    private static final String INSERT_USER_ROLE = "insert into db.users_roles (userId, roleType) values (?,?)";
+    private static final String INSERT_USER_ROLE = "insert into users_roles (userId, roleType) values (?,?)";
     private static String ROLE_USER = "USER";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public User addUser(User user) {
+    public User addUser(User user) throws EmailAlreadyInUseException {
+        User retrievedUser = DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_USER_BY_EMAIL,
+                new TradingMappers.UserMapper(), user.getEmail());
+
+        if (retrievedUser != null) throw new EmailAlreadyInUseException();
+
         SqlParameterSource sps = new MapSqlParameterSource()
                 .addValue("firstName", user.getFirstName())
                 .addValue("lastName", user.getLastName())
@@ -48,16 +54,12 @@ public class UserDaoDatabaseImpl implements UserDao {
                 .addValue("currentBalance", user.getCurrentBalance().doubleValue())
                 .addValue("password", user.getPassword());
 
-//        jdbcTemplate.update(INSERT_USER, user.getFirstName(), user.getLastName(), user.getEmail(),
-//                user.getCurrentBalance().doubleValue(), user.getPassword());
-
         int userId = new SimpleJdbcInsert(dataSource)
-                .withTableName("db.users")
+                .withTableName("users")
                 .usingGeneratedKeyColumns("userId")
                 .executeAndReturnKey(sps)
                 .intValue();
 
-                //jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         user.setUserId(userId);
         addUserRole(userId);
         return user;

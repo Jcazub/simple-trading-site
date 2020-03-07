@@ -1,5 +1,6 @@
 package com.trading.controller;
 
+import com.trading.exceptions.EmailAlreadyInUseException;
 import com.trading.exceptions.MalformedObjectException;
 import com.trading.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class LoginController {
         try {
             userService.addUser(user);
             redirectView = new RedirectView("/login", true);
-        } catch (MalformedObjectException e) {
+        } catch (MalformedObjectException | EmailAlreadyInUseException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             redirectView = new RedirectView("/register", true);
         }
