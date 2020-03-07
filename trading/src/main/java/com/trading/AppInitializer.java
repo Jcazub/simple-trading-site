@@ -27,6 +27,10 @@ public class AppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic appServlet = sc.addServlet("mvc", dispatcherServlet);
         appServlet.setLoadOnStartup(1);
         appServlet.addMapping("/");
+//        appServlet.addMapping("*.css");
+//        appServlet.addMapping("*.js");
+//        appServlet.addMapping("*.jpg");
+//        appServlet.addMapping("*.png");
 
         sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
                 .addMappingForUrlPatterns(null, false, "/*");

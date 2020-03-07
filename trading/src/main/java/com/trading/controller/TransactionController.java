@@ -1,5 +1,7 @@
 package com.trading.controller;
 
+import com.trading.exceptions.TransactionNotFoundException;
+import com.trading.exceptions.UserNotFoundException;
 import com.trading.model.Transaction;
 import com.trading.model.User;
 import com.trading.service.TransactionService;
@@ -35,9 +37,9 @@ public class TransactionController {
             User user = userService.getUserByEmail(email);
             List<Transaction> userTransactions = transactionService.getTransactionsByUserDescendingDateTime(user.getUserId());
             model.addAttribute("transactions", userTransactions);
-        } catch (Exception e) {
+        } catch (UserNotFoundException | TransactionNotFoundException e) {
             //TODO: implement exception handling
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
         }
 
         return "transactions";

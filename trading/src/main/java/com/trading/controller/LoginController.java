@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.trading.service.UserService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -36,7 +38,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(HttpServletRequest request, Model model) {
+    public RedirectView addUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView;
+
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
         String email = request.getParameter("email");
@@ -52,11 +56,12 @@ public class LoginController {
 
         try {
             userService.addUser(user);
+            redirectView = new RedirectView("/login", true);
         } catch (MalformedObjectException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "register";
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectView = new RedirectView("/register", true);
         }
 
-        return "redirect:/login";
+        return redirectView;
     }
 }

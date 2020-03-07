@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -36,9 +38,10 @@ public class TradeController {
     }
 
     @RequestMapping(value = "/buyStock", method = RequestMethod.POST)
-    public String buyStock(HttpServletRequest request, Model model, Principal principal) {
+    public RedirectView buyStock(HttpServletRequest request, RedirectAttributes redirectAttributes, Principal principal) {
 
         String email = principal.getName();
+        RedirectView redirectView = new RedirectView("/portfolio", true);
 
         try {
             User user = userService.getUserByEmail(email);
@@ -49,9 +52,11 @@ public class TradeController {
 
             stockAPI.buyStock(tradeRequest);
         } catch (UserNotFoundException | MalformedObjectException | NotEnoughFundsException | StockNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        return "redirect:/portfolio";
+
+
+        return redirectView;
     }
 }

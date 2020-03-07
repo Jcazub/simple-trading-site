@@ -33,7 +33,7 @@ public class TradeRequest {
     }
 
     public String getSymbol() {
-        return symbol;
+        return symbol.toUpperCase();
     }
 
     @Override

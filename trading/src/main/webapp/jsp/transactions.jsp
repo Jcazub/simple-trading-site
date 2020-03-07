@@ -28,6 +28,8 @@
 <jsp:include page="_nav.jsp"/>
 
 <div class="text-center">
+    <jsp:include page="_errorMessage.jsp"/>
+
     <h1>TRANSACTIONS</h1>
     <ul class="list-group list-group-flush">
         <c:forEach var="currentTransaction" items="${transactions}">

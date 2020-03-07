@@ -46,7 +46,7 @@ public class PortfolioController {
             model.addAttribute("userStocks", user.getStocksOwned());
 
         } catch (UserNotFoundException | StockNotFoundException e) {
-            e.printStackTrace();
+            model.addAttribute("errorMessage", e.getMessage());
         }
         return "portfolio";
     }

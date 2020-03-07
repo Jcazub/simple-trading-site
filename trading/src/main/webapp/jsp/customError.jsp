@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Trading Site</h1>
+    <h1>${error_tech}</h1>
     <hr/>
     <div class="navbar">
         <ul class="nav nav-tabs">
@@ -22,7 +22,7 @@
     </div>
     <div>
         <h1>An error has occurred...</h1>
-        <h3>${errorMessage}</h3>
+        <h3>${error_human}</h3>
     </div>
     <jsp:include page="_footer.jsp"/>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

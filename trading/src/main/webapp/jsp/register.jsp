@@ -27,6 +27,8 @@
 <body>
 <jsp:include page="_nav.jsp"/>
 <div class="container">
+    <jsp:include page="_errorMessage.jsp"/>
+
     <h2 class="text-center">Account Creation</h2>
 
     <form class="form-horizontal"

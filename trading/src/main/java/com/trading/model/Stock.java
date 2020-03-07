@@ -14,7 +14,7 @@ public class Stock {
     }
 
     public String getSymbol() {
-        return symbol;
+        return symbol.toUpperCase();
     }
 
     public BigDecimal getPrice() {

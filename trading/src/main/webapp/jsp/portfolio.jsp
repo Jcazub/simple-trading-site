@@ -28,18 +28,19 @@
 <jsp:include page="_nav.jsp"/>
 
 <div class = "text-center">
-    <h1>PORTFOLIO</h1>
+    <jsp:include page="_errorMessage.jsp"/>
 
+    <h1>PORTFOLIO</h1>
     <div class="col-xs-6 text-center">
         <span>Total Value: ${totalPortfolioValue}</span>
         <ul class="list-group list-group-flush">
             <c:forEach var="currentStock" items="${userStocks}">
-                <li class="list-group-item">${currentStock.symbol} - ${currentStock.ownedUnits} Shares   $ ${currentStock.getTotalValue()}</li>
+                <li class="list-group-item">${currentStock.symbol} - ${currentStock.ownedUnits} Shares   $${currentStock.getTotalValue()}</li>
             </c:forEach>
         </ul>
     </div>
     <div class="col-xs-6 text-center">
-        <p>Account Balance: ${user.currentBalance}</p>
+        <p>Account Balance: $${user.currentBalance}</p>
         <form class="form-horizontal"
               name="f"
               role="form"
@@ -59,7 +60,7 @@
             <div class="form-group">
                 <label for="buy-amount" class="col-md-4 control-label"></label>
                 <div class="col-md-4">
-                    <input type="text"
+                    <input type="number"
                            id="buy-amount"
                            name="amount"
                            placeholder="Qty"

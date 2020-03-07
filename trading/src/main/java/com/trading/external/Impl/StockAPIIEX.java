@@ -9,6 +9,7 @@ import com.trading.model.*;
 import com.trading.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.zankowski.iextrading4j.api.exception.IEXTradingException;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 import pl.zankowski.iextrading4j.client.IEXCloudClient;
 import pl.zankowski.iextrading4j.client.IEXCloudTokenBuilder;
@@ -42,13 +43,17 @@ public class StockAPIIEX implements StockAPI {
 
     @Override
     public Stock getStockInfo(String symbol) throws StockNotFoundException {
-        final Quote quote = cloudClient.executeRequest(new QuoteRequestBuilder()
-                .withSymbol(symbol)
-                .build());
 
-        if (quote == null) throw new StockNotFoundException();
+        try {
+            final Quote quote = cloudClient.executeRequest(new QuoteRequestBuilder()
+                    .withSymbol(symbol)
+                    .build());
 
-        return new Stock(symbol, quote.getLatestPrice());
+            return new Stock(symbol, quote.getLatestPrice());
+        } catch (IEXTradingException e) {
+            throw new StockNotFoundException();
+        }
+
     }
 
     @Override
