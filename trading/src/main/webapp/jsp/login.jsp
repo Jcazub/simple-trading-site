@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<jsp:include page="_nav.jsp"/>
 <div class="w3-container">
     <h2 style="text-align:center;">Log In</h2>
     <c:if test="${param.login_error == 1}">
@@ -62,7 +63,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
+            <div class="text-center">
                 <input type="submit"
                        name="submit"
                        class="btn btn-default"
@@ -72,19 +73,14 @@
         </div>
     </form>
 
-    <div class="col-md-offset-4 col-md-8">
-        <a  href="${pageContext.request.contextPath}/register"
-               class="btn btn-default"
-               id="register-button">Register</a>
+    <div class="text-center">
+        <span>New to the site? </span>
+        <a  href="${pageContext.request.contextPath}/register">Register</a>
     </div>
 
 </div>
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
-<div class="w3-container">
-    <footer class="container-fluid text-center main-footer">
-        <p>&copy; Trading Site</p>
-    </footer>
-</div>
+<jsp:include page="_nav.jsp"/>
+
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

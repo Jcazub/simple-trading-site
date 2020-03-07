@@ -24,6 +24,7 @@
         <h1>An error has occurred...</h1>
         <h3>${errorMessage}</h3>
     </div>
+    <jsp:include page="_nav.jsp"/>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

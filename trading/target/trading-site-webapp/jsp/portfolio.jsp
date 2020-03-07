@@ -25,6 +25,7 @@
 </head>
 
 <body>
+<jsp:include page="_nav.jsp"/>
 <h1>PORTFOLIO</h1>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
 <div class="w3-container">

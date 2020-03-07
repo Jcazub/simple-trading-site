@@ -25,13 +25,9 @@
 </head>
 
 <body>
+<jsp:include page="_nav.jsp"/>
 <h1>PORTFOLIO</h1>
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
-<div class="w3-container">
-    <footer class="container-fluid text-center main-footer">
-        <p>&copy; Trading Site</p>
-    </footer>
-</div>
+<jsp:include page="_nav.jsp"/>
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

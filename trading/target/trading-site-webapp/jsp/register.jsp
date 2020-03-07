@@ -25,7 +25,7 @@
 </head>
 
 <body>
-
+<jsp:include page="_nav.jsp"/>
 <div class="container">
     <h2 class="text-center">Account Creation</h2>
 

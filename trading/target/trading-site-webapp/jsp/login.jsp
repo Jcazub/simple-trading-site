@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<jsp:include page="_nav.jsp"/>
 <div class="w3-container">
     <h2 style="text-align:center;">Log In</h2>
     <c:if test="${param.login_error == 1}">
@@ -62,7 +63,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
+            <div class="text-center">
                 <input type="submit"
                        name="submit"
                        class="btn btn-default"
@@ -72,10 +73,9 @@
         </div>
     </form>
 
-    <div class="col-md-offset-4 col-md-8">
-        <a  href="${pageContext.request.contextPath}/register"
-               class="btn btn-default"
-               id="register-button">Register</a>
+    <div class="text-center">
+        <span>New to the site? </span>
+        <a  href="${pageContext.request.contextPath}/register">Register</a>
     </div>
 
 </div>

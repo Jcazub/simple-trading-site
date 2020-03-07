@@ -25,7 +25,7 @@
 </head>
 
 <body>
-
+<jsp:include page="_nav.jsp"/>
 <div class="container">
     <h2 class="text-center">Account Creation</h2>
 
@@ -93,13 +93,7 @@
     </form>
 
 </div>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
-<div class="w3-container">
-    <footer class="container-fluid text-center main-footer">
-        <p>	&copy; Trading Site</p>
-    </footer>
-</div>
+<jsp:include page="_footer.jsp"/>
 
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->
