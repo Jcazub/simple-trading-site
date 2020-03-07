@@ -82,7 +82,7 @@ public class User {
     public BigDecimal getTotalPorfolioValue() {
         BigDecimal totalValue = new BigDecimal(0);
         for (UserStock currentUserStock : getStocksOwned()) {
-            totalValue.add(currentUserStock.getTotalValue());
+            totalValue = totalValue.add(currentUserStock.getTotalValue());
         }
         return totalValue;
     }

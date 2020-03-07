@@ -41,7 +41,7 @@ public class PortfolioController {
             List<UserStock> userStocks = userStockService.getStocksByUserDescendingInPrice(user.getUserId());
             user.setStocksOwned(userStocks);
 
-            model.addAttribute(user);
+            model.addAttribute("user", user);
             model.addAttribute("totalPortfolioValue", user.getTotalPorfolioValue());
             model.addAttribute("userStocks", user.getStocksOwned());
 

@@ -3,7 +3,10 @@ package com.trading.dao.DatabaseImpl;
 import com.trading.dao.UserStockDao;
 import com.trading.model.UserStock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
             "userId = ?, ownedUnits = ? where stockId = ?";
     private static final String DELETE_STOCK = "delete from db.stocks where stockId = ?";
     private static final String SELECT_STOCK = "select * from db.stocks where stockId = ?";
+    private static final String SELECT_STOCK_BY_SYMBOL = "select * from db.stocks where symbol = ?";
     private static final String SELECT_ALL_STOCKS = "select * from db.stocks";
     private static final String SELECT_ALL_STOCKS_BY_USER = "select * from db.stocks where userId = ?";
     private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from db.stocks where " +
@@ -37,11 +41,25 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public UserStock addStock(UserStock stock) {
-        jdbcTemplate.update(INSERT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(),
-                stock.getUserId(), stock.getOwnedUnits());
-        int stockId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
-        stock.setStockId(stockId);
-        return stock;
+        UserStock retrievedStock = getStockBySymbol(stock.getSymbol());
+
+        if (retrievedStock == null) {
+            jdbcTemplate.update(INSERT_STOCK, stock.getSymbol(), stock.getPrice().doubleValue(),
+                    stock.getUserId(), stock.getOwnedUnits());
+            int stockId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+            stock.setStockId(stockId);
+
+            return stock;
+        } else {
+            int ownedUnits = retrievedStock.getOwnedUnits() + stock.getOwnedUnits();
+            retrievedStock.setOwnedUnits(ownedUnits);
+
+            retrievedStock.setPrice(stock.getPrice());
+
+            editStock(retrievedStock);
+
+            return retrievedStock;
+        }
     }
 
     @Override
@@ -56,6 +74,11 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public UserStock getStock(int stockId) {
         return jdbcTemplate.queryForObject(SELECT_STOCK, new TradingMappers.StockMapper(), stockId);
+    }
+
+    @Override
+    public UserStock getStockBySymbol(String symbol) {
+        return queryForNullableObject(SELECT_STOCK_BY_SYMBOL, new TradingMappers.StockMapper(), symbol);
     }
 
     @Override
@@ -80,5 +103,19 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserStock> getStocksByUserDescendingInPrice(int userId) {
         return jdbcTemplate.query(SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE, new TradingMappers.StockMapper(), userId);
+    }
+
+    private <T> T queryForNullableObject(String sql, RowMapper<T> rowMapper, Object argument) throws DataAccessException {
+        List<T> results = jdbcTemplate.query(sql, rowMapper, argument);
+
+        if (results == null || results.isEmpty()) {
+            return null;
+        }
+        else if (results.size() > 1) {
+            throw new IncorrectResultSizeDataAccessException(1, results.size());
+        }
+        else{
+            return results.iterator().next();
+        }
     }
 }

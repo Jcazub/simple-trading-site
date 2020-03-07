@@ -26,43 +26,61 @@
 
 <body>
 <jsp:include page="_nav.jsp"/>
-<h1>PORTFOLIO</h1>
-<form class="form-horizontal"
-      name="f"
-      role="form"
-      method="POST"
-      action="buyStock">
-    <div class="form-group">
-        <label for="buy-symbol" class="col-md-4 control-label"></label>
-        <div class="col-md-4">
-            <input type="text"
-                   id="buy-symbol"
-                   name="symbol"
-                   placeholder="Ticker"
-                   maxlength="50"
-                   required/>
-        </div>
+
+<div class = "text-center">
+    <h1>PORTFOLIO</h1>
+
+    <div class="col-xs-6 text-center">
+        <span>Total Value: ${totalPortfolioValue}</span>
+        <ul class="list-group list-group-flush">
+            <c:forEach var="currentStock" items="${userStocks}">
+                <li class="list-group-item">${currentStock.symbol} - ${currentStock.ownedUnits} Shares   $ ${currentStock.getTotalValue()}</li>
+            </c:forEach>
+        </ul>
     </div>
-    <div class="form-group">
-        <label for="buy-amount" class="col-md-4 control-label"></label>
-        <div class="col-md-4">
-            <input type="text"
-                   id="buy-amount"
-                   name="amount"
-                   placeholder="Qty"
-                   maxlength="50"
-                   required/>
-        </div>
+    <div class="col-xs-6 text-center">
+        <p>Account Balance: ${user.currentBalance}</p>
+        <form class="form-horizontal"
+              name="f"
+              role="form"
+              method="POST"
+              action="buyStock">
+            <div class="form-group">
+                <label for="buy-symbol" class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <input type="text"
+                           id="buy-symbol"
+                           name="symbol"
+                           placeholder="Ticker"
+                           maxlength="50"
+                           required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="buy-amount" class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <input type="text"
+                           id="buy-amount"
+                           name="amount"
+                           placeholder="Qty"
+                           maxlength="50"
+                           required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="text-center">
+                    <input type="submit"
+                           name="submit"
+                           class="btn btn-default"
+                           value="Buy"/>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <div class="text-center">
-            <input type="submit"
-                   name="submit"
-                   class="btn btn-default"
-                   value="Buy"/>
-        </div>
-    </div>
-</form>
+
+
+</div>
+
 <jsp:include page="_footer.jsp"/>
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->

@@ -25,10 +25,10 @@ public class IndexController {
     public String showLandingPage(Principal principal) {
 
         if (!isUserIsLoggedIn()){
-            return "login";
+            return "redirect:/login";
         }
 
-        return "portfolio";
+        return "redirect:/portfolio";
 
     }
 
