@@ -5,14 +5,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-inverse">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<c:url value = "/"/>"><img class="logo-img" src="<c:url value = "/img/logo.png"/>"></a>
-        </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="<c:url value = "/"/>">Home</a></li>
@@ -22,18 +14,6 @@
                 </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form navbar-left" method="GET" action="<c:url value = "/"/>">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="post-search">
-                        <div class="input-group-btn">
-                            <button type="submit" class="btn btn-default" id="search-posts-btn">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
 
@@ -58,7 +38,6 @@
                         </c:choose>
                     </c:otherwise>
                 </c:choose>
-
             </ul>
         </div>
     </div>

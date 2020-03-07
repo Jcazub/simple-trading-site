@@ -27,9 +27,10 @@
 <body>
 <jsp:include page="_nav.jsp"/>
 <h1>TRANSACTIONS</h1>
-<jsp:include page="_nav.jsp"/>
+<jsp:include page="_footer.jsp"/>
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- Personal Scripts -->

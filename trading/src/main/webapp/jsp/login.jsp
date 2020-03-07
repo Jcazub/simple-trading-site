@@ -39,11 +39,11 @@
           method="POST"
           action="perform_login">
         <div class="form-group">
-            <label for="username" class="col-md-4 control-label">Email:</label>
+            <label for="login-username" class="col-md-4 control-label">Email:</label>
             <div class="col-md-4">
                 <input type="email"
                        class="form-control"
-                       id="username"
+                       id="login-username"
                        name="username"
                        placeholder="Email"
                        maxlength="50"
@@ -51,11 +51,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="col-md-4 control-label">Password:</label>
+            <label for="login-password" class="col-md-4 control-label">Password:</label>
             <div class="col-md-4">
                 <input type="password"
                        class="form-control"
-                       id="password"
+                       id="login-password"
                        name="password"
                        placeholder="Password"
                        maxlength="50"
@@ -67,7 +67,6 @@
                 <input type="submit"
                        name="submit"
                        class="btn btn-default"
-                       id="submit-login-button"
                        value="Sign In"/>
             </div>
         </div>
@@ -79,7 +78,7 @@
     </div>
 
 </div>
-<jsp:include page="_nav.jsp"/>
+<jsp:include page="_footer.jsp"/>
 
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->

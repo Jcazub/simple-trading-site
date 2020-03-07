@@ -40,7 +40,7 @@
                 <input type="text"
                        class="form-control"
                        name="firstname"
-                       placeholder="First Name:"
+                       placeholder="First Name"
                        maxlength="50"
                        required/>
             </div>
@@ -52,7 +52,7 @@
                 <input type="text"
                        class="form-control"
                        name="lastname"
-                       placeholder="Last Name:"
+                       placeholder="Last Name"
                        maxlength="50"
                        required/>
             </div>
@@ -64,7 +64,7 @@
                 <input type="email"
                        class="form-control"
                        name="email"
-                       placeholder="Email:"
+                       placeholder="Email"
                        maxlength="50"
                        required/>
             </div>
@@ -83,7 +83,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
+            <div class="text-center">
                 <input type="submit"
                        class="btn btn-default"
                        id=""
@@ -92,14 +92,13 @@
         </div>
     </form>
 
-</div>
+    <div class="text-center">
+        <span>Already a user? </span>
+        <a  href="${pageContext.request.contextPath}/login">Sign in</a>
+    </div>
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FOOTER-->
-<div class="w3-container">
-    <footer class="container-fluid text-center main-footer">
-        <p>	&copy; Trading Site</p>
-    </footer>
 </div>
+<jsp:include page="_footer.jsp"/>
 
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Bootstrap 3 scripts -->
