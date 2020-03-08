@@ -29,6 +29,8 @@ public class UserDaoDatabaseImpl implements UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /* PREPARED SQL STATEMENTS */
+
     private static final String DELETE_USER = "delete from users where userId = ?";
     private static final String EDIT_USER = "update users set firstName = ?, lastName = ?, email = ?," +
             "currentBalance = ?, password = ? where userId = ?";
@@ -42,11 +44,9 @@ public class UserDaoDatabaseImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User addUser(User user) throws EmailAlreadyInUseException {
-        User retrievedUser = DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_USER_BY_EMAIL,
-                new TradingMappers.UserMapper(), user.getEmail());
+        checkIfEmailInUse(user);
 
-        if (retrievedUser != null) throw new EmailAlreadyInUseException();
-
+        // used to execute sql using SimpleJdbcInsert
         SqlParameterSource sps = new MapSqlParameterSource()
                 .addValue("firstName", user.getFirstName())
                 .addValue("lastName", user.getLastName())
@@ -54,6 +54,7 @@ public class UserDaoDatabaseImpl implements UserDao {
                 .addValue("currentBalance", user.getCurrentBalance().doubleValue())
                 .addValue("password", user.getPassword());
 
+        // used instead of jdbcTemplate to fetch id executing against the database
         int userId = new SimpleJdbcInsert(dataSource)
                 .withTableName("users")
                 .usingGeneratedKeyColumns("userId")
@@ -98,5 +99,12 @@ public class UserDaoDatabaseImpl implements UserDao {
 
     private void addUserRole(int userId) {
         jdbcTemplate.update(INSERT_USER_ROLE, userId, ROLE_USER);
+    }
+
+    private void checkIfEmailInUse(User user) throws EmailAlreadyInUseException {
+        User retrievedUser = DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_USER_BY_EMAIL,
+                new TradingMappers.UserMapper(), user.getEmail());
+
+        if (retrievedUser != null) throw new EmailAlreadyInUseException();
     }
 }

@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String AUTHORITIES_QUERY = "select email AS username, roleType from users u join " +
             "users_roles ur on u.userID = ur.userID where u.email=?;";
 
+    /* dataSource variable may appear to show error in IDE, but is supplied at app initialization */
     @Autowired
     public SecurityConfig(DataSource dataSource) {
         super();

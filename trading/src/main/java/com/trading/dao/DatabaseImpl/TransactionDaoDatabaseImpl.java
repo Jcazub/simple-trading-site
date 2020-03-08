@@ -27,6 +27,8 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /* PREPARED SQL STATEMENTS */
+
     private static final String DELETE_TRANSACTION = "delete from transactions where transactionId = ?";
     private static final String SELECT_TRANSACTION = "select * from transactions where transactionId = ?";
     private static final String SELECT_ALL_TRANSACTION = "select * from transactions";
@@ -37,6 +39,8 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Transaction addTransaction(Transaction transaction) {
+
+        // used to execute sql using SimpleJdbcInsert
         SqlParameterSource sps = new MapSqlParameterSource()
                 .addValue("userId", transaction.getUserId())
                 .addValue("amountTraded", transaction.getAmountTraded())
@@ -45,6 +49,7 @@ public class TransactionDaoDatabaseImpl implements TransactionDao {
                 .addValue("stockPriceAtPurchase", transaction.getStockPriceAtPurchase().doubleValue())
                 .addValue("transactionType", transaction.getTransactionType().toString());
 
+        // used instead of jdbcTemplate to fetch id executing against the database
         int transactionId = new SimpleJdbcInsert(dataSource)
                 .withTableName("transactions")
                 .usingGeneratedKeyColumns("transactionId")

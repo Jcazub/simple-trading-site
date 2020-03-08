@@ -31,6 +31,8 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /* PREPARED SQL STATEMENTS */
+
     private static final String EDIT_STOCK = "update stocks set symbol = ?, price = ?," +
             "userId = ?, ownedUnits = ? where stockId = ?";
     private static final String DELETE_STOCK = "delete from stocks where stockId = ?";
@@ -48,30 +50,9 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
         UserStock retrievedStock = getStockBySymbol(stock.getSymbol(), stock.getUserId());
 
         if (retrievedStock == null) {
-            SqlParameterSource sps = new MapSqlParameterSource()
-                    .addValue("symbol", stock.getSymbol())
-                    .addValue("price", stock.getPrice().doubleValue())
-                    .addValue("userId", stock.getUserId())
-                    .addValue("ownedUnits", stock.getOwnedUnits());
-
-            int stockId = new SimpleJdbcInsert(dataSource)
-                    .withTableName("stocks")
-                    .usingGeneratedKeyColumns("stockId")
-                    .executeAndReturnKey(sps)
-                    .intValue();
-
-            stock.setStockId(stockId);
-
-            return stock;
+            return addNewUserStock(stock);
         } else {
-            int ownedUnits = retrievedStock.getOwnedUnits() + stock.getOwnedUnits();
-            retrievedStock.setOwnedUnits(ownedUnits);
-
-            retrievedStock.setPrice(stock.getPrice());
-
-            editStock(retrievedStock);
-
-            return retrievedStock;
+            return updateExistingUserStock(retrievedStock, stock);
         }
     }
 
@@ -117,5 +98,36 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserStock> getStocksByUserDescendingInPrice(int userId) {
         return jdbcTemplate.query(SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE, new TradingMappers.StockMapper(), userId);
+    }
+
+    private UserStock addNewUserStock(UserStock stock) {
+        // used to execute sql using SimpleJdbcInsert
+        SqlParameterSource sps = new MapSqlParameterSource()
+                .addValue("symbol", stock.getSymbol())
+                .addValue("price", stock.getPrice().doubleValue())
+                .addValue("userId", stock.getUserId())
+                .addValue("ownedUnits", stock.getOwnedUnits());
+
+        // used instead of jdbcTemplate to fetch id executing against the database
+        int stockId = new SimpleJdbcInsert(dataSource)
+                .withTableName("stocks")
+                .usingGeneratedKeyColumns("stockId")
+                .executeAndReturnKey(sps)
+                .intValue();
+
+        stock.setStockId(stockId);
+
+        return stock;
+    }
+
+    private UserStock updateExistingUserStock(UserStock retrievedStock, UserStock stock) {
+        int ownedUnits = retrievedStock.getOwnedUnits() + stock.getOwnedUnits();
+        retrievedStock.setOwnedUnits(ownedUnits);
+
+        retrievedStock.setPrice(stock.getPrice());
+
+        editStock(retrievedStock);
+
+        return retrievedStock;
     }
 }
