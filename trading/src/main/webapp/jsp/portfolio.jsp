@@ -25,16 +25,21 @@
         <span>Total Value: ${totalPortfolioValue}</span>
         <ul class="list-group list-group-flush">
             <c:forEach var="currentStock" items="${userStocks}">
-                <li class="list-group-item"><span id=${currentStock.symbol}>${currentStock.symbol} - ${currentStock.ownedUnits} Shares $${currentStock.getTotalValue()}</span></li>
+                <li class="list-group-item"><span id="${currentStock.symbol}">${currentStock.symbol} -
+                        ${currentStock.ownedUnits} Shares $<span id="${currentStock.symbol}_VALUE"></span></span></li>
                 <script>
                     continuousPromise(() => {
                         let stockId = "<c:out value='${currentStock.symbol}'/>";
+                        let valueId = "<c:out value='${currentStock.symbol}'/>" + "_VALUE";
+                        let units = parseInt("<c:out value='${currentStock.ownedUnits}'/>");
 
                         return axios.get("https://sandbox-sse.iexapis.com/stable/stock/"
                             + stockId + "/quote?token=Tpk_18dfe6cebb4f41ffb219b9680f9acaf2")
                             .then(function (response) {
                                 var quote = response.data;
                                 var stock_color;
+
+                                ${currentStock.price}
 
                                 if (quote.open > quote.latestPrice) {
                                     stock_color = "red_stock"
@@ -44,6 +49,9 @@
                                     stock_color = "grey_stock"
                                 }
                                 document.getElementById(stockId).setAttribute("class", stock_color);
+
+                                let currentPrice = units * quote.latestPrice;
+                                document.getElementById(valueId).innerText = currentPrice.toFixed(2).toString();
                             });
                     }, 150);
                 </script>
