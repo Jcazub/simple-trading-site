@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
-<html class="login-html">
+<html lang="en">
 <head>
 
     <title>Login</title>

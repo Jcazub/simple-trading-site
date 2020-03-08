@@ -36,10 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
-//        auth.inMemoryAuthentication()
-//                .withUser("user@gmail.com").password(passwordEncoder().encode("pass"))
-//                .roles("USER");
-
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(USERS_QUERY)
                 .authoritiesByUsernameQuery(AUTHORITIES_QUERY)
@@ -49,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -75,7 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login");
-                //.logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler());
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package com.trading;
 
+import com.amazonaws.services.rds.model.ResourceNotFoundException;
 import com.trading.security.handlers.CustomExceptionResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

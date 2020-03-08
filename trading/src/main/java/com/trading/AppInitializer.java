@@ -22,15 +22,11 @@ public class AppInitializer implements WebApplicationInitializer {
         sc.addListener(new ContextLoaderListener(root));
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(new GenericWebApplicationContext());
-        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
 
         ServletRegistration.Dynamic appServlet = sc.addServlet("mvc", dispatcherServlet);
         appServlet.setLoadOnStartup(1);
         appServlet.addMapping("/");
-//        appServlet.addMapping("*.css");
-//        appServlet.addMapping("*.js");
-//        appServlet.addMapping("*.jpg");
-//        appServlet.addMapping("*.png");
+        appServlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 
         sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
                 .addMappingForUrlPatterns(null, false, "/*");
