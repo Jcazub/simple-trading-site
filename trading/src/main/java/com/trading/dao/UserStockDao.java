@@ -8,7 +8,7 @@ public interface UserStockDao {
     UserStock addStock(UserStock stock);
     UserStock editStock(UserStock stock);
     UserStock getStock(int stockId);
-    UserStock getStockBySymbol(String symbol);
+    UserStock getStockBySymbol(String symbol, int userId);
     void deleteStock(int stockId);
 
     List<UserStock> getAllStocks();

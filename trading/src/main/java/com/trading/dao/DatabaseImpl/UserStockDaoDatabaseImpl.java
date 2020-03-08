@@ -35,7 +35,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
             "userId = ?, ownedUnits = ? where stockId = ?";
     private static final String DELETE_STOCK = "delete from stocks where stockId = ?";
     private static final String SELECT_STOCK = "select * from stocks where stockId = ?";
-    private static final String SELECT_STOCK_BY_SYMBOL = "select * from stocks where symbol = ?";
+    private static final String SELECT_STOCK_BY_SYMBOL = "select * from stocks where symbol = ? and userId = ?";
     private static final String SELECT_ALL_STOCKS = "select * from stocks";
     private static final String SELECT_ALL_STOCKS_BY_USER = "select * from stocks where userId = ?";
     private static final String SELECT_ALL_STOCKS_BY_USER_DESCENDING_IN_PRICE = "select * from stocks where " +
@@ -45,7 +45,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public UserStock addStock(UserStock stock) {
-        UserStock retrievedStock = getStockBySymbol(stock.getSymbol());
+        UserStock retrievedStock = getStockBySymbol(stock.getSymbol(), stock.getUserId());
 
         if (retrievedStock == null) {
             SqlParameterSource sps = new MapSqlParameterSource()
@@ -90,8 +90,9 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
     }
 
     @Override
-    public UserStock getStockBySymbol(String symbol) {
-        return DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_STOCK_BY_SYMBOL, new TradingMappers.StockMapper(), symbol);
+    public UserStock getStockBySymbol(String symbol, int userId) {
+        return DatabaseHelper.queryForNullableObject(jdbcTemplate, SELECT_STOCK_BY_SYMBOL,
+                new TradingMappers.StockMapper(), symbol, userId);
     }
 
     @Override

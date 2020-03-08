@@ -26,12 +26,12 @@
         <ul class="list-group list-group-flush">
             <c:forEach var="currentStock" items="${userStocks}">
                 <li class="list-group-item"><span id="${currentStock.symbol}">${currentStock.symbol} -
-                        ${currentStock.ownedUnits} Shares $<span id="${currentStock.symbol}_VALUE"></span></span></li>
+                        ${currentStock.ownedUnits} Shares $<span id="${currentStock.symbol}_VALUE">${currentStock.getTotalValue()}</span></span></li>
                 <script>
                     continuousPromise(() => {
-                        let stockId = "<c:out value='${currentStock.symbol}'/>";
-                        let valueId = "<c:out value='${currentStock.symbol}'/>" + "_VALUE";
-                        let units = parseInt("<c:out value='${currentStock.ownedUnits}'/>");
+                        var stockId = "<c:out value='${currentStock.symbol}'/>";
+                        var valueId = "<c:out value='${currentStock.symbol}'/>" + "_VALUE";
+                        var units = parseInt("<c:out value='${currentStock.ownedUnits}'/>");
 
                         return axios.get("https://sandbox-sse.iexapis.com/stable/stock/"
                             + stockId + "/quote?token=Tpk_18dfe6cebb4f41ffb219b9680f9acaf2")
@@ -50,7 +50,7 @@
                                 }
                                 document.getElementById(stockId).setAttribute("class", stock_color);
 
-                                let currentPrice = units * quote.latestPrice;
+                                var currentPrice = units * quote.latestPrice;
                                 document.getElementById(valueId).innerText = currentPrice.toFixed(2).toString();
                             });
                     }, 150);

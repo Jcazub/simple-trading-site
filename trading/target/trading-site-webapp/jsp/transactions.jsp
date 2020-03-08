@@ -22,7 +22,7 @@
     <h1>TRANSACTIONS</h1>
     <ul class="list-group list-group-flush">
         <c:forEach var="currentTransaction" items="${transactions}">
-            <li class="list-group-item">${currentTransaction.transactionType} (${currentTransaction.symbol}) - ${currentTransaction.amountTraded} Shares @ ${currentTransaction.stockPriceAtPurchase.doubleValue()}</li>
+            <li class="list-group-item">${currentTransaction.transactionType} (${currentTransaction.symbol}) - ${currentTransaction.amountTraded} Shares @ ${currentTransaction.stockPriceAtPurchase}</li>
         </c:forEach>
     </ul>
 </div>
