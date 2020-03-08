@@ -50,7 +50,7 @@ public class UserStockDaoDatabaseImpl implements UserStockDao {
         if (retrievedStock == null) {
             SqlParameterSource sps = new MapSqlParameterSource()
                     .addValue("symbol", stock.getSymbol())
-                    .addValue("price", stock.getTotalValue().doubleValue())
+                    .addValue("price", stock.getPrice().doubleValue())
                     .addValue("userId", stock.getUserId())
                     .addValue("ownedUnits", stock.getOwnedUnits());
 

@@ -31,18 +31,27 @@ public class TransactionController {
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
     public String getTransactionsPage(Model model, Principal principal)
     {
-        String email = principal.getName();
-
-        try {
-            User user = userService.getUserByEmail(email);
-            List<Transaction> userTransactions = transactionService.getTransactionsByUserDescendingDateTime(user.getUserId());
-            model.addAttribute("transactions", userTransactions);
-        } catch (UserNotFoundException | TransactionNotFoundException e) {
-            //TODO: implement exception handling
-            model.addAttribute("errorMessage", e.getMessage());
-        }
-
+        getTransactionsPageInfo(model, principal);
         return "transactions";
+    }
+
+    private void getTransactionsPageInfo(Model model, Principal principal) {
+        try {
+            getTransactions(model, principal);
+        } catch (UserNotFoundException | TransactionNotFoundException e) {
+            logError(e, model);
+        }
+    }
+
+    private void getTransactions(Model model, Principal principal) throws UserNotFoundException, TransactionNotFoundException {
+        String email = principal.getName();
+        User user = userService.getUserByEmail(email);
+        List<Transaction> userTransactions = transactionService.getTransactionsByUserDescendingDateTime(user.getUserId());
+        model.addAttribute("transactions", userTransactions);
+    }
+
+    private void logError(Exception e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
     }
 
 }

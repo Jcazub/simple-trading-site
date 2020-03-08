@@ -2,7 +2,6 @@ package com.trading.controller;
 
 import com.trading.exceptions.StockNotFoundException;
 import com.trading.exceptions.UserNotFoundException;
-import com.trading.external.StockAPI;
 import com.trading.model.User;
 import com.trading.model.UserStock;
 import com.trading.service.UserService;
@@ -21,33 +20,41 @@ public class PortfolioController {
 
     private UserService userService;
     private UserStockService userStockService;
-    private StockAPI stockAPI;
 
     @Autowired
-    public PortfolioController(UserService userService, UserStockService userStockService, StockAPI stockAPI) {
+    public PortfolioController(UserService userService, UserStockService userStockService) {
         this.userService = userService;
         this.userStockService = userStockService;
-        this.stockAPI = stockAPI;
     }
 
     @RequestMapping(value = "/portfolio", method = RequestMethod.GET)
     public String getPortfolioPage(Model model, Principal principal)
     {
-        String email = principal.getName();
-
-        try {
-            User user = userService.getUserByEmail(email);
-
-            List<UserStock> userStocks = userStockService.getStocksByUserDescendingInPrice(user.getUserId());
-            user.setStocksOwned(userStocks);
-
-            model.addAttribute("user", user);
-            model.addAttribute("totalPortfolioValue", user.getTotalPorfolioValue());
-            model.addAttribute("userStocks", user.getStocksOwned());
-
-        } catch (UserNotFoundException | StockNotFoundException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-        }
+        getPortfolioPageInfo(model, principal);
         return "portfolio";
+    }
+
+    private void getPortfolioPageInfo(Model model, Principal principal) {
+        try {
+            getPortfolio(model, principal);
+        } catch (UserNotFoundException | StockNotFoundException e) {
+            logError(e, model);
+        }
+    }
+
+    private void getPortfolio(Model model, Principal principal) throws UserNotFoundException, StockNotFoundException {
+        String email = principal.getName();
+        User user = userService.getUserByEmail(email);
+
+        List<UserStock> userStocks = userStockService.getStocksByUserDescendingInPrice(user.getUserId());
+        user.setStocksOwned(userStocks);
+
+        model.addAttribute("user", user);
+        model.addAttribute("totalPortfolioValue", user.getTotalPorfolioValue());
+        model.addAttribute("userStocks", user.getStocksOwned());
+    }
+
+    private void logError(Exception e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
     }
 }

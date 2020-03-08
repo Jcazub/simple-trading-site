@@ -3,13 +3,12 @@ package com.trading.controller;
 import com.trading.exceptions.EmailAlreadyInUseException;
 import com.trading.exceptions.MalformedObjectException;
 import com.trading.model.User;
+import com.trading.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.trading.service.UserService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -40,8 +39,12 @@ public class LoginController {
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public RedirectView addUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        RedirectView redirectView;
+        User user = createUser(request);
+        return addUserToDatabase(user, redirectAttributes);
+        //TODO: when roleService is implemented, add code to edit user roles
+    }
 
+    private User createUser(HttpServletRequest request) {
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
         String email = request.getParameter("email");
@@ -53,16 +56,24 @@ public class LoginController {
 
         User user = new User(firstName, lastName, email, currentBalance, hashPassword);
 
-        //TODO: when roleService is implemented, add code to edit user roles
+        return user;
+    }
 
+    private RedirectView addUserToDatabase(User user, RedirectAttributes redirectAttributes) {
         try {
-            userService.addUser(user);
-            redirectView = new RedirectView("/login", true);
+            return persistUser(user);
         } catch (MalformedObjectException | EmailAlreadyInUseException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            redirectView = new RedirectView("/register", true);
+            return logError(e, redirectAttributes);
         }
+    }
 
-        return redirectView;
+    private RedirectView persistUser(User user) throws EmailAlreadyInUseException, MalformedObjectException {
+        userService.addUser(user);
+        return new RedirectView("/login", true);
+    }
+
+    private RedirectView logError(Exception e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        return new RedirectView("/register", true);
     }
 }
