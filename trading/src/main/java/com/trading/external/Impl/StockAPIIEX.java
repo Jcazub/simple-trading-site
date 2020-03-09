@@ -42,49 +42,50 @@ public class StockAPIIEX implements StockAPI {
     }
 
     @Override
-    public Stock getStockInfo(String symbol) throws StockNotFoundException {
+    public UserStock buyStock(TradeRequest tradeRequest) throws StockNotFoundException, MalformedObjectException, NotEnoughFundsException, UserNotFoundException {
+        Stock stockToBeBought = getStockInfo(tradeRequest.getSymbol());
+        return processStockPurchase(tradeRequest, stockToBeBought);
+    }
 
+    private Stock getStockInfo(String symbol) throws StockNotFoundException {
         try {
-            final Quote quote = cloudClient.executeRequest(new QuoteRequestBuilder()
-                    .withSymbol(symbol)
-                    .build());
-
-            return new Stock(symbol, quote.getLatestPrice());
+            return convertQuoteToStock(symbol);
         } catch (IEXTradingException e) {
             throw new StockNotFoundException();
         }
-
     }
 
-    @Override
-    public UserStock buyStock(TradeRequest tradeRequest) throws StockNotFoundException, MalformedObjectException, NotEnoughFundsException, UserNotFoundException {
-        Stock stockToBeBought = getStockInfo(tradeRequest.getSymbol());
-
+    private UserStock processStockPurchase(TradeRequest tradeRequest, Stock stockToBeBought) throws MalformedObjectException, UserNotFoundException, NotEnoughFundsException {
         BigDecimal purchasePrice = stockToBeBought.getPrice().multiply(new BigDecimal(tradeRequest.getAmountToBeTraded()));
+        tradeRequest.setTotalPurchasePrice(purchasePrice);
 
-        if (doesUserHaveEnoughFunds(tradeRequest, purchasePrice))
+        if (doesUserHaveEnoughFunds(tradeRequest))
         {
-            User user = tradeRequest.getUser();
-
-            Transaction transaction = new Transaction(user.getUserId(),
-                    tradeRequest.getAmountToBeTraded(), tradeRequest.getSymbol(), LocalDateTime.now(),
-                    stockToBeBought.getPrice(), tradeRequest.getTransactionType());
-
-            transactionService.addTransaction(transaction);
-
-            UserStock boughtStock = UserStock.convertToOwnedStock(stockToBeBought, user.getUserId(),
-                    tradeRequest.getAmountToBeTraded());
-
-            updateBalance(user, purchasePrice);
-
-            return userStockService.addStock(boughtStock);
+            return proceedWithStockPurchase(tradeRequest, stockToBeBought);
         } else {
             throw new NotEnoughFundsException();
         }
     }
 
-    private boolean doesUserHaveEnoughFunds(TradeRequest tradeRequest, BigDecimal totalPrice) {
-        return tradeRequest.getUser().getCurrentBalance().compareTo(totalPrice) >= 0;
+    private UserStock proceedWithStockPurchase(TradeRequest tradeRequest, Stock stockToBeBought) throws MalformedObjectException, UserNotFoundException {
+        User user = tradeRequest.getUser();
+
+        Transaction transaction = new Transaction(user.getUserId(),
+                tradeRequest.getAmountToBeTraded(), tradeRequest.getSymbol(), LocalDateTime.now(),
+                stockToBeBought.getPrice(), tradeRequest.getTransactionType());
+
+        transactionService.addTransaction(transaction);
+
+        UserStock boughtStock = UserStock.convertToOwnedStock(stockToBeBought, user.getUserId(),
+                tradeRequest.getAmountToBeTraded());
+
+        updateBalance(user, tradeRequest.getTotalPurchasePrice());
+
+        return userStockService.addStock(boughtStock);
+    }
+
+    private boolean doesUserHaveEnoughFunds(TradeRequest tradeRequest) {
+        return tradeRequest.getUser().getCurrentBalance().compareTo(tradeRequest.getTotalPurchasePrice()) >= 0;
     }
 
     private void updateBalance(User user, BigDecimal amountToSubtract) throws UserNotFoundException, MalformedObjectException {
@@ -92,5 +93,13 @@ public class StockAPIIEX implements StockAPI {
         BigDecimal newBalance = currentBalance.subtract(amountToSubtract);
         user.setCurrentBalance(newBalance);
         userService.editUser(user);
+    }
+
+    private Stock convertQuoteToStock(String symbol) {
+        final Quote quote = cloudClient.executeRequest(new QuoteRequestBuilder()
+                .withSymbol(symbol)
+                .build());
+
+        return new Stock(symbol, quote.getLatestPrice());
     }
 }

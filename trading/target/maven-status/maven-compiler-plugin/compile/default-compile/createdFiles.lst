@@ -1,6 +1,5 @@
 com\trading\model\Stock.class
 com\trading\dao\UserStockDao.class
-com\trading\model\Role.class
 com\trading\external\StockAPI.class
 com\trading\model\TransactionType.class
 com\trading\security\handlers\CustomExceptionResolver.class
@@ -16,6 +15,7 @@ com\trading\dao\DatabaseImpl\UserDaoDatabaseImpl.class
 com\trading\service\Impl\UserServiceImpl.class
 com\trading\controller\TransactionController.class
 com\trading\model\User.class
+com\trading\security\handlers\ExceptionDetails.class
 com\trading\service\TransactionService.class
 com\trading\exceptions\TransactionNotFoundException.class
 com\trading\utilites\VerificationHelper.class

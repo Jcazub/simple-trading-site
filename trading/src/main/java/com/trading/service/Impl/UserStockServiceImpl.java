@@ -23,22 +23,15 @@ public class UserStockServiceImpl implements UserStockService {
     }
     @Override
     public UserStock addStock(UserStock stock) throws MalformedObjectException {
-        if (verifyStockNotNull(stock)) {
-            return userStockDao.addStock(stock);
-        } else {
-            throw new MalformedObjectException();
-        }
+        if (isStockMalformed(stock)) throw new MalformedObjectException();
+        return userStockDao.addStock(stock);
     }
 
     @Override
     public UserStock editStock(UserStock stock) throws MalformedObjectException, StockNotFoundException {
-        if (!verifyStockNotNull(stock)) {
-            throw new MalformedObjectException();
-        } else if (stock.getStockId() < 1) {
-            throw new StockNotFoundException();
-        } else if (stock.getUserId() < 1) {
-            throw new StockNotFoundException("The user this stock belongs to could not be found");
-        }
+        if (stock.getStockId() < 1) throw new StockNotFoundException();
+        else if (stock.getUserId() < 1) throw new StockNotFoundException("The user this stock belongs to could not be found");
+        else if (isStockMalformed(stock)) throw new MalformedObjectException();
         return userStockDao.editStock(stock);
     }
 
@@ -71,13 +64,13 @@ public class UserStockServiceImpl implements UserStockService {
         return userStockDao.getStocksByUserDescendingInPrice(userId);
     }
 
-    private boolean verifyStockNotNull(UserStock stock)
+    private boolean isStockMalformed(UserStock stock)
     {
         if (VerificationHelper.isStringInvalid(stock.getSymbol()) ||
             VerificationHelper.isBigDecimalInvalid(stock.getPrice()) ||
             stock.getOwnedUnits() < -1 ||
             stock.getUserId() < -1)
-                return false;
-        return true;
+                return true;
+        return false;
     }
 }

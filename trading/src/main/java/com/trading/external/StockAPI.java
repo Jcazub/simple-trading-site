@@ -9,6 +9,5 @@ import com.trading.model.Stock;
 import com.trading.model.TradeRequest;
 
 public interface StockAPI {
-    Stock getStockInfo(String symbol) throws StockNotFoundException;
     UserStock buyStock(TradeRequest tradeRequest) throws StockNotFoundException, MalformedObjectException, NotEnoughFundsException, UserNotFoundException;
 }

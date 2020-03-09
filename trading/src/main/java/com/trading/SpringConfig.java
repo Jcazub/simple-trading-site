@@ -75,13 +75,24 @@ public class SpringConfig implements WebMvcConfigurer {
     HandlerExceptionResolver customExceptionResolver () {
         CustomExceptionResolver resolver = new CustomExceptionResolver();
         Properties mappings = new Properties();
+
+        setMappingsProperties(mappings);
+        resolver.setExceptionMappings(mappings);
+        setResolverSettings(resolver);
+
+        return resolver;
+    }
+
+    private void setMappingsProperties(Properties mappings) {
         // Mapping Spring internal error NoHandlerFoundException to a view name
         mappings.setProperty(NoHandlerFoundException.class.getName(), "/customError");
         mappings.setProperty(InternalServerErrorException.class.getName(), "/customError");
         mappings.setProperty(NullPointerException.class.getName(), "/customError");
         mappings.setProperty(ClassNotFoundException.class.getName(), "/customError");
         mappings.setProperty(Exception.class.getName(), "/customError");
-        resolver.setExceptionMappings(mappings);
+    }
+
+    private void setResolverSettings(CustomExceptionResolver resolver) {
         // Set specific HTTP codes
         resolver.addStatusCode("404", HttpStatus.NOT_FOUND.value());
         resolver.addStatusCode("500", HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -90,7 +101,6 @@ public class SpringConfig implements WebMvcConfigurer {
         // This resolver will be processed before the default ones
         resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
         resolver.setExceptionAttribute("exception");
-        return resolver;
     }
 
 }

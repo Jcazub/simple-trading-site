@@ -1,5 +1,6 @@
 package com.trading.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class TradeRequest {
@@ -8,6 +9,7 @@ public class TradeRequest {
     private int amountToBeTraded;
     private TransactionType transactionType;
     private String symbol;
+    private BigDecimal totalPurchasePrice;
 
     public TradeRequest(User user, int amountToBeTraded, TransactionType transactionType, String symbol) {
         this.user = user;
@@ -36,6 +38,14 @@ public class TradeRequest {
         return symbol.toUpperCase();
     }
 
+    public BigDecimal getTotalPurchasePrice() {
+        return totalPurchasePrice;
+    }
+
+    public void setTotalPurchasePrice(BigDecimal totalPurchasePrice) {
+        this.totalPurchasePrice = totalPurchasePrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,11 +54,12 @@ public class TradeRequest {
         return amountToBeTraded == that.amountToBeTraded &&
                 Objects.equals(user, that.user) &&
                 transactionType == that.transactionType &&
-                Objects.equals(symbol, that.symbol);
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(totalPurchasePrice, that.totalPurchasePrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, amountToBeTraded, transactionType, symbol);
+        return Objects.hash(user, amountToBeTraded, transactionType, symbol, totalPurchasePrice);
     }
 }

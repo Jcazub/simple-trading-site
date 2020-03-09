@@ -26,43 +26,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) throws MalformedObjectException, EmailAlreadyInUseException {
-        if (verifyUserNotNull(user)) {
-            return userDao.addUser(user);
-        } else {
-            throw new MalformedObjectException();
-        }
+        if (isUserMalformed(user)) throw new MalformedObjectException();
+        return userDao.addUser(user);
     }
 
     @Override
     public User editUser(User user) throws MalformedObjectException, UserNotFoundException {
-        if (!verifyUserNotNull(user)) {
-            throw new MalformedObjectException();
-        } else if (user.getUserId() < 1) {
-            throw new UserNotFoundException();
-        }
+        if (isUserMalformed(user)) throw new MalformedObjectException();
+        else if (user.getUserId() < 1) throw new UserNotFoundException();
         return userDao.editUser(user);
     }
 
     @Override
     public User getUser(int userId) throws UserNotFoundException {
         if (userId < 1) throw new UserNotFoundException();
-
         return userDao.getUser(userId);
     }
 
     @Override
     public User getUserByEmail(String email) throws UserNotFoundException {
-        if (VerificationHelper.isStringInvalid(email))
-        {
-            throw new UserNotFoundException();
-        }
+        if (VerificationHelper.isStringInvalid(email)) throw new UserNotFoundException();
         return userDao.getUserByEmail(email);
     }
 
     @Override
     public void deleteUser(int userId) throws UserNotFoundException {
         if (userId < 1) throw new UserNotFoundException();
-
         userDao.deleteUser(userId);
     }
 
@@ -71,14 +60,14 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllUsers();
     }
 
-    private boolean verifyUserNotNull(User user)
+    private boolean isUserMalformed(User user)
     {
         if (user.getCurrentBalance() == null ||
             VerificationHelper.isStringInvalid(user.getEmail()) ||
             VerificationHelper.isStringInvalid(user.getFirstName()) ||
             VerificationHelper.isStringInvalid(user.getLastName()) ||
             VerificationHelper.isStringInvalid(user.getPassword()))
-                return false;
-        return true;
+                return true;
+        return false;
     }
 }

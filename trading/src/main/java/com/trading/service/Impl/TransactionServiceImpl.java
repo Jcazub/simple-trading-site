@@ -25,11 +25,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction addTransaction(Transaction transaction) throws MalformedObjectException {
-        if (verifyTransactionNotNull(transaction)) {
-            return transactionDao.addTransaction(transaction);
-        } else {
-            throw new MalformedObjectException();
-        }
+        if (isTransactionMalformed(transaction)) throw new MalformedObjectException();
+        return transactionDao.addTransaction(transaction);
     }
 
     @Override
@@ -58,17 +55,16 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionsByUserDescendingDateTime(int userId) throws TransactionNotFoundException {
         if (userId < 1) throw new TransactionNotFoundException("The user this transaction belongs to could not be found");
-
         return transactionDao.getTransactionsByUserDescendingDateTime(userId);
     }
 
-    private boolean verifyTransactionNotNull(Transaction transaction)
+    private boolean isTransactionMalformed(Transaction transaction)
     {
         if (VerificationHelper.isStringInvalid(transaction.getSymbol()) ||
         transaction.getAmountTraded() < 1 ||
         VerificationHelper.isBigDecimalInvalid(transaction.getStockPriceAtPurchase())||
         transaction.getTransactionDateTime() == null)
-            return false;
-        return true;
+            return true;
+        return false;
     }
 }

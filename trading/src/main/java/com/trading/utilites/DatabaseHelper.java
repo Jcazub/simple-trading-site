@@ -9,31 +9,12 @@ import java.util.List;
 
 public class DatabaseHelper {
 
-    public static <T> T queryForNullableObject(JdbcTemplate jdbcTemplate, String sql, RowMapper<T> rowMapper, Object argument) throws DataAccessException {
-        List<T> results = jdbcTemplate.query(sql, rowMapper, argument);
+    // used in place of queryForObject since queryForObject throws error if a result isn't returned
+    public static <T> T queryForNullableObject(JdbcTemplate jdbcTemplate, String sql, RowMapper<T> rowMapper, Object... arguments) throws DataAccessException {
+        List<T> results = jdbcTemplate.query(sql, rowMapper, arguments);
 
-        if (results == null || results.isEmpty()) {
-            return null;
-        }
-        else if (results.size() > 1) {
-            throw new IncorrectResultSizeDataAccessException(1, results.size());
-        }
-        else{
-            return results.iterator().next();
-        }
-    }
-
-    public static <T> T queryForNullableObject(JdbcTemplate jdbcTemplate, String sql, RowMapper<T> rowMapper, Object argument1, Object argument2) throws DataAccessException {
-        List<T> results = jdbcTemplate.query(sql, rowMapper, argument1, argument2);
-
-        if (results == null || results.isEmpty()) {
-            return null;
-        }
-        else if (results.size() > 1) {
-            throw new IncorrectResultSizeDataAccessException(1, results.size());
-        }
-        else{
-            return results.iterator().next();
-        }
+        if (results == null || results.isEmpty()) return null;
+        else if (results.size() > 1)  throw new IncorrectResultSizeDataAccessException(1, results.size());
+        else return results.iterator().next();
     }
 }
