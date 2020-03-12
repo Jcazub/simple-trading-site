@@ -1,6 +1,6 @@
 package com.trading.exceptions;
 
-public class TransactionNotFoundException extends Exception {
+public class TransactionNotFoundException extends RuntimeException {
 
     public TransactionNotFoundException(String message, Throwable error){
         super(message, error);

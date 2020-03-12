@@ -1,6 +1,6 @@
 package com.trading.exceptions;
 
-public class EmailAlreadyInUseException extends Exception {
+public class EmailAlreadyInUseException extends RuntimeException {
 
     public EmailAlreadyInUseException(String message, Throwable error) {
         super(message, error);

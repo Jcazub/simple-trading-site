@@ -1,6 +1,6 @@
 package com.trading.exceptions;
 
-public class MalformedObjectException extends Exception {
+public class MalformedObjectException extends RuntimeException {
 
     public MalformedObjectException(String message, Throwable error){
         super(message, error);
