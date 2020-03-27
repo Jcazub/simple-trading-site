@@ -1,41 +1,49 @@
 package com.trading.dao;
 
+import com.trading.BaseInitializer;
+import com.trading.SpringConfig;
 import com.trading.model.User;
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
-import org.powermock.api.mockito.PowerMockito;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.testcontainers.containers.MySQLContainer;
 
-import java.math.BigDecimal;
 import java.util.List;
 
+@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {SpringConfig.class}, initializers = {UserDaoTest.Initializer.class},
+        loader = AnnotationConfigWebContextLoader.class)
 public class UserDaoTest {
 
-//    UserDao userDao;
-//
-//    public UserDaoTest()
-//    {
-//        ApplicationContext ctx
-//                = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-//
-//        userDao = ctx.getBean("userDao", UserDao.class);
-//    }
-//
-//    @Before
-//    public void setUp()
-//    {
-//        List<User> users = userDao.getAllUsers();
-//        for (User currentUser : users)
-//        {
-//            userDao.deleteUser(currentUser.getUserId());
-//        }
-//    }
-//
-//    @Test
-//    public void testAddGetUser()
-//    {
+    @Autowired
+    UserDao userDao;
+
+    @ClassRule
+    public static MySQLContainer<?> mySQLContainer = new MySQLContainer<>()
+            .withUsername("root")
+            .withPassword("")
+            .withInitScript("create-database.sql");
+
+    @Before
+    public void setUp()
+    {
+        List<User> users = userDao.getAllUsers();
+        for (User currentUser : users)
+        {
+            userDao.deleteUser(currentUser.getUserId());
+        }
+    }
+
+    @Test
+    public void testAddGetUser()
+    {
 //        User user = PowerMockito.mock(User.class);
 //
 //        userDao.addUser(user);
@@ -43,8 +51,15 @@ public class UserDaoTest {
 //        User retrievedUser = userDao.getUser(user.getUserId());
 //
 //        Assert.assertEquals(user, retrievedUser);
-//    }
-//
+    }
+
+    public static class Initializer
+            extends BaseInitializer {
+        public Initializer() {
+            super(mySQLContainer);
+        }
+    }
+
 //    @Test
 //    public void testDeleteUser()
 //    {

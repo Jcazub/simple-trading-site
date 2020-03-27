@@ -66,6 +66,8 @@
           <element id="library" level="project" name="Maven: com.amazonaws:jmespath-java:1.11.336" />
           <element id="library" level="project" name="Maven: com.amazonaws:aws-java-sdk-iam:1.11.336" />
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.24.0-GA" />
+          <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.3.1" />
+          <element id="library" level="project" name="Maven: javax.activation:javax.activation-api:1.2.0" />
           <element id="library" level="project" name="Maven: pl.zankowski:iextrading4j-all:3.3.2" />
           <element id="library" level="project" name="Maven: pl.zankowski:iextrading4j-api:3.3.2" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:28.0-jre" />
@@ -101,8 +103,6 @@
           <element id="library" level="project" name="Maven: com.squareup.okhttp3:okhttp:3.8.1" />
           <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.13.0" />
           <element id="library" level="project" name="Maven: org.json:json:20090211" />
-          <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.3.1" />
-          <element id="library" level="project" name="Maven: javax.activation:javax.activation-api:1.2.0" />
           <element id="library" level="project" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.1" />
           <element id="library" level="project" name="Maven: org.glassfish.jaxb:jaxb-runtime:2.3.1" />
           <element id="library" level="project" name="Maven: org.glassfish.jaxb:txw2:2.3.1" />

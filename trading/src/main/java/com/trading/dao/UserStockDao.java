@@ -1,6 +1,7 @@
 package com.trading.dao;
 
 import com.trading.model.UserStock;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

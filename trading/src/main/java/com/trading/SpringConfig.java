@@ -1,10 +1,11 @@
 package com.trading;
 
-import com.amazonaws.services.rds.model.ResourceNotFoundException;
 import com.trading.security.handlers.CustomExceptionResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -26,6 +26,7 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
+@ComponentScan(basePackages = {"com.trading"})
 public class SpringConfig implements WebMvcConfigurer {
 
     @Resource
@@ -102,5 +103,4 @@ public class SpringConfig implements WebMvcConfigurer {
         resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
         resolver.setExceptionAttribute("exception");
     }
-
 }

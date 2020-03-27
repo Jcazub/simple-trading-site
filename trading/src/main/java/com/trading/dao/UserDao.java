@@ -2,6 +2,7 @@ package com.trading.dao;
 
 import com.trading.exceptions.EmailAlreadyInUseException;
 import com.trading.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
