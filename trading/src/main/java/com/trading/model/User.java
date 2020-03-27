@@ -1,6 +1,7 @@
 package com.trading.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +22,8 @@ public class User {
         this.email = email;
         this.currentBalance = currentBalance;
         this.password = password;
+        this.stocksOwned = new ArrayList<>();
+        this.transactionsCompleted = new ArrayList<>();
     }
 
     public int getUserId() {
@@ -105,7 +108,7 @@ public class User {
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(currentBalance, user.currentBalance) &&
+                currentBalance.compareTo(user.currentBalance) == 0 &&
                 Objects.equals(stocksOwned, user.stocksOwned) &&
                 Objects.equals(transactionsCompleted, user.transactionsCompleted);
     }
