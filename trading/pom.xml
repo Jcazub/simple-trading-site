@@ -11,7 +11,7 @@
     <name>Simple Trading Webapp</name>
 
     <properties>
-        <spring.version>5.2.4.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <spring.security.version>5.3.0.RELEASE</spring.security.version>
         <jackson.version>2.10.3</jackson.version>
         <junit.version>4.12</junit.version>
